@@ -1,0 +1,500 @@
+% !TEX program = pdflatex
+\documentclass[11pt,a4paper,oneside]{book}
+
+% =========================
+% Preamble (PASTE-BLOK 0)
+% =========================
+\usepackage[dutch]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=2.7cm}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{slashed}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue
+}
+
+% Theorem environments (rigorous style)
+\theoremstyle{plain}
+\newtheorem{theorem}{Stelling}[chapter]
+\newtheorem{proposition}[theorem]{Propositie}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollarium}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definitie}
+\newtheorem{axiom}[theorem]{Axioma}
+\newtheorem{example}[theorem]{Voorbeeld}
+\newtheorem{remark}[theorem]{Opmerking}
+
+% Useful macros
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\renewcommand{\dd}{\,\mathrm{d}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+
+\newcommand{\inner}[2]{\left\langle #1, #2\right\rangle}
+\newcommand{\normH}[1]{\left\lVert #1\right\rVert}
+
+% Chapter formatting tastefully minimal
+\setcounter{tocdepth}{2}
+
+% =========================
+% Title (PASTE-BLOK 1)
+% =========================
+\title{Path integralen op een praktische manier\\
+	\large (maximaal wiskundig rigoureuze benadering)}
+\author{Jeroen Vermeulen}
+\date{}
+
+\begin{document}
+	
+	\frontmatter
+	\maketitle
+	\tableofcontents
+	
+	% =========================
+	% Voorwoord (PASTE-BLOK 2)
+	% =========================
+	\chapter*{Voorwoord}
+	\addcontentsline{toc}{chapter}{Voorwoord}
+	
+	Deze tekst behandelt de padintegraalformulering met de nadruk op (i) een wiskundig consistente formulering waar mogelijk,
+	(ii) expliciete bruggen naar de ``werkformules'' in QFT, en (iii) heldere aanduiding van waar fysische notatie een
+	afkorting is van een onderliggende maat-theoretische constructie.
+	
+	De centrale spanning is bekend: de formele maat $\cD\phi$ op een oneindig-dimensionale functieruimte bestaat niet als
+	een Lebesgue-maat, en toch leiden correct geïnterpreteerde limieten (Gaussian measures, Wienermaat, lattice-regularisatie,
+	Osterwalder--Schrader reconstructie) tot een rigoureuze basis voor grote klassen van theorieën. Dit boek kiest daarom
+	systematisch voor: \emph{(a) definities via benaderingen (cylindrische sets, projectielimieten), (b) Euclidische formuleringen
+		met positieve maat waar mogelijk, en (c) terugvertaling naar Minkowski via analytische voortzetting met expliciete voorwaarden.}
+	
+	\mainmatter
+	
+	% ============================================================
+	% DEEL I — Functionaalanalyse en maat-theorie als fundament
+	% ============================================================
+	\part{Functionaalanalyse, maat-theorie en het probleem van $\cD\phi$}
+	
+	% =========================
+	% HOOFDSTUK 1 (PASTE-BLOK 3)
+	% =========================
+	\chapter{Configuratieruimten, functionaalintegralen en cilindermaat}
+	
+	\section{Motivatie: waarom $\int \cD\phi$ geen Lebesgue-maat is}
+	In eindige dimensie bestaat een translatie-invariante Lebesgue-maat op $\R^n$ en is Gaussiaanse integratie
+	\[
+	\int_{\R^n} e^{-\frac12 x^T A x + J^T x}\dd x
+	= (2\pi)^{n/2}(\det A)^{-1/2}e^{\frac12 J^T A^{-1}J}
+	\]
+	een standaardresultaat voor symmetrisch positief-definiete $A$.
+	In oneindige dimensie faalt een analoog construct: er bestaat geen (niet-triviale) $\sigma$-finitie translatie-invariante maat
+	op een separabele oneindig-dimensionale Banachruimte. Dit is een fundamenteel obstakel voor de naïeve notatie
+	$\int \cD\phi\, e^{-S[\phi]}$.
+	
+	Toch bestaan er wél natuurlijke maten op functieruimten, met name Gaussiaanse maten (zoals de Wienermaat),
+	die niet translatie-invariant zijn maar wel precies de objecten leveren die in Euclidische QFT nodig zijn.
+	
+	\section{Cilinderfuncties en projectieve limieten}
+	Laat $E$ een reële topologische vectorruimte zijn (bv. $E=\cS'(\R^d)$, getemperde distributies).
+	Een \emph{cilinderfunctie} is een functie $F:E\to\R$ die afhangt van finitely many lineaire coördinaten:
+	\[
+	F(\phi)=f(\ell_1(\phi),\dots,\ell_n(\phi)),
+	\]
+	met $\ell_i\in E^\ast$ continu lineair en $f:\R^n\to\R$ Borel-meetbaar.
+	
+	\begin{definition}[Cilindrische $\sigma$-algebra]
+		De cilindrische $\sigma$-algebra $\Sigma_{\mathrm{cyl}}$ op $E$ is de kleinste $\sigma$-algebra zodat alle
+		evaluatiemappen $\phi\mapsto (\ell_1(\phi),\dots,\ell_n(\phi))$ meetbaar zijn voor elke eindige keuze van $\ell_i$.
+	\end{definition}
+	
+	\begin{definition}[Cilindermaat]
+		Een cilindermaat op $E$ is een consistente familie van eindig-dimensionale verdelingen $\{\mu_{\ell_1,\dots,\ell_n}\}$
+		op $\R^n$ zodanig dat projecties compatibel zijn: als men een lineaire projectie $\pi:\R^n\to\R^m$ neemt die overeenkomt
+		met het vergeten van sommige coördinaten, dan geldt $\mu_{\ell_1,\dots,\ell_m} = \mu_{\ell_1,\dots,\ell_n}\circ \pi^{-1}$.
+	\end{definition}
+	
+	Het bestaan van een echte maat op een geschikte Borel $\sigma$-algebra vereist bijkomende regulariteit (tightness).
+	In de praktijk werkt men in QFT vaak met:
+	\begin{itemize}[leftmargin=*]
+		\item een \emph{lattice-regularisatie} die een echte eindige-dimensionale Lebesgue-maat definieert,
+		\item een \emph{continuüm-limiet} als zwakke limiet van waarschijnlijkheidsmaten,
+		\item of een \emph{Gaussiaanse maat} op een distributieruimte, gegarandeerd door het Minlos-theorema.
+	\end{itemize}
+	
+	\section{Minlos: Gaussiaanse maten op distributieruimten}
+	Laat $\cS(\R^d)$ de Schwartz-ruimte zijn en $\cS'(\R^d)$ haar duale. Een karakteristieke functionaal
+	$C:\cS(\R^d)\to\C$ is positief-definiet en continu. Dan:
+	
+	\begin{theorem}[Bochner--Minlos (schets)]
+		Als $C$ continu en positief-definiet is met $C(0)=1$, dan bestaat een unieke waarschijnlijkheidsmaat $\mu$ op $\cS'(\R^d)$
+		zodat
+		\[
+		C(f)=\int_{\cS'(\R^d)} e^{i\phi(f)}\,\mu(\dd \phi)
+		\quad \text{voor alle } f\in \cS(\R^d).
+		\]
+	\end{theorem}
+	
+	In Euclidische vrije scalaire veldentheorie kiest men
+	\[
+	C(f)=\exp\left(-\frac12 \inner{f}{( -\Delta + m^2)^{-1} f}\right),
+	\]
+	wat een Gaussiaanse maat op $\cS'(\R^d)$ definieert. Dit is de rigoureuze kern van de ``vrije padintegraal''.
+	
+	\section{Van formele naar rigoureuze notatie}
+	Wanneer fysici schrijven
+	\[
+	\int \cD\phi \, e^{-\frac12\int \phi K \phi + \int J\phi},
+	\]
+	bedoelen we rigoureus: een Gaussiaanse maat $\mu_K$ op een geschikte ruimte (meestal distributies) met covariantie $K^{-1}$,
+	en de bronterm als exponentiële cilinderfunctie, mits $J$ in de juiste testfunctieruimte ligt.
+	
+	\begin{remark}
+		De Minkowski-factor $e^{iS}$ produceert geen positieve maat en vereist analytische voortzetting of oscillatoire integralen.
+		Daarom is de wiskundig nette route: eerst Euclidisch ($e^{-S_E}$), dan reconstructie/continuatie.
+	\end{remark}
+	
+	% =========================
+	% HOOFDSTUK 2 (PASTE-BLOK 4)
+	% =========================
+	\chapter{Wienermaat en de Feynman--Kac formule}
+	
+	\section{Wienermaat als padmaat}
+	Laat $C([0,T],\R^d)$ de ruimte van continue paden zijn met de supremumnorm. De Wienermaat $\PP$ maakt van de coördinaatmap
+	$B_t(\omega)=\omega(t)$ een Brownse beweging met $B_0=0$.
+	
+	\begin{definition}[Brownse beweging]
+		Een proces $(B_t)_{t\in[0,T]}$ is Brownse beweging als:
+		(i) $B_0=0$ a.s.,
+		(ii) onafhankelijke incrementen,
+		(iii) $B_t-B_s\sim \mathcal{N}(0,(t-s)I)$ voor $0\le s<t$,
+		(iv) continuïteit van paden.
+	\end{definition}
+	
+	\section{Feynman--Kac: Euclidische kwantummechanica}
+	Beschouw de Schrödinger-operator $H=-\frac12\Delta + V(x)$ op $L^2(\R^d)$ onder standaardvoorwaarden op $V$.
+	Dan geldt voor geschikte $f$:
+	
+	\begin{theorem}[Feynman--Kac]
+		Voor $t\ge 0$:
+		\[
+		(e^{-tH}f)(x)=\EE_x\left[\exp\left(-\int_0^t V(B_s)\dd s\right) f(B_t)\right],
+		\]
+		waar $\EE_x$ verwachting is voor Brownse beweging gestart in $x$.
+	\end{theorem}
+	
+	\begin{remark}
+		Dit is de rigoureuze versie van de (Euclidische) padintegraal voor kwantummechanica:
+		\[
+		\int \exp\left(-\int_0^t \left(\frac12 \dot x^2 + V(x)\right)\dd s\right)\cD x
+		\]
+		wordt vervangen door een verwachting t.o.v. Wienermaat, met de kinetische term geïncorporeerd in de maat.
+	\end{remark}
+	
+	\section{Semiklassieke limiet en grote-afwijkingen}
+	De limiet $\hbar\to 0$ correspondeert (na schaaltransformatie) met grote-afwijkingsprincipes (Freidlin--Wentzell),
+	waarbij het actiefunctionaal het snelheidsfunctionaal vormt. Dit verbindt stationaire fase met probabilistische variatieprincipes.
+	
+	% ============================================================
+	% DEEL II — Euclidische vrije QFT en OS-reconstructie
+	% ============================================================
+	\part{Euclidische vrije QFT, correlaties en reconstructie}
+	
+	% =========================
+	% HOOFDSTUK 3 (PASTE-BLOK 5)
+	% =========================
+	\chapter{Vrij scalaire Euclidische veldentheorie als Gaussiaanse maat}
+	
+	\section{Testfuncties, distributies en covariantie}
+	Neem $d\ge 2$ en laat $\cS(\R^d)$ de Schwartz-ruimte zijn. Definieer de operator
+	\[
+	K \coloneqq -\Delta + m^2,\quad m>0.
+	\]
+	De inverse $K^{-1}$ bestaat als continue operator op geschikte Sobolev-ruimten en induceert een bilineaire vorm
+	\[
+	C(f,g)\coloneqq \inner{f}{K^{-1}g}.
+	\]
+	Dit is symmetrisch en positief-definiet.
+	
+	\begin{definition}[Vrije Euclidische veldmaat]
+		De \emph{vrije scalaire Euclidische veldmaat} $\mu_0$ is de unieke Gaussiaanse waarschijnlijkheidsmaat op $\cS'(\R^d)$
+		met karakteristieke functionaal
+		\[
+		\int_{\cS'(\R^d)} e^{i\phi(f)}\,\mu_0(\dd\phi)
+		= \exp\left(-\frac12 C(f,f)\right).
+		\]
+	\end{definition}
+	
+	\section{Schwingerfuncties (Euclidische correlaties)}
+	\begin{definition}[Schwingerfuncties]
+		Voor $f_1,\dots,f_n\in\cS(\R^d)$ definieer
+		\[
+		S_n(f_1,\dots,f_n)\coloneqq \int \phi(f_1)\cdots \phi(f_n)\,\mu_0(\dd\phi).
+		\]
+	\end{definition}
+	
+	Voor de Gaussiaanse maat geldt Wick:
+	\[
+	S_{2n}(f_1,\dots,f_{2n})
+	= \sum_{\text{pairings}} \prod_{(i,j)} C(f_i,f_j),
+	\quad S_{2n+1}=0.
+	\]
+	
+	\section{Positiviteit en Osterwalder--Schrader axioma’s (overzicht)}
+	De OS-axioma’s geven voorwaarden op Schwingerfuncties zodat ze afkomstig zijn van een Wightman-theorie na reconstructie.
+	Cruciaal is \emph{reflectiepositiviteit}.
+	
+	\begin{axiom}[Reflectiepositiviteit (schets)]
+		Laat $\theta$ tijdreflectie zijn in Euclidische tijd $x_0\mapsto -x_0$. Voor functies $F$ afhankelijk van veldwaarden in $x_0>0$
+		geldt
+		\[
+		\int \overline{F(\phi)}\, (F\circ \theta)(\phi)\,\mu(\dd\phi)\ge 0.
+		\]
+	\end{axiom}
+	
+	\begin{remark}
+		Voor het vrije veld kan men reflectiepositiviteit aantonen via de expliciete covariantie-kern en Fourier-analyse.
+		Voor interactietheorieën is dit subtiel en vormt dit de kern van constructieve QFT.
+	\end{remark}
+	
+	% =========================
+	% HOOFDSTUK 4 (PASTE-BLOK 6)
+	% =========================
+	\chapter{Van Euclidisch naar Minkowski: analytische voortzetting en reconstructie (schets)}
+	
+	\section{Kernidee}
+	In Minkowski beschrijven Wightman-functies $W_n$ de vacuümverwachtingswaarden van tijdgeordende operatorproducten.
+	De OS-theorie zegt: gegeven Schwingerfuncties $S_n$ die OS-axioma’s voldoen, bestaat er een Hilbertruimte, velden als operatorwaardige distributies,
+	en Wightman-functies die via analytische voortzetting uit $S_n$ volgen.
+	
+	\section{Waarom de Euclidische route essentieel is}
+	De Minkowski ``maat'' $\exp(iS)\cD\phi$ is oscillatoir en doorgaans niet als maat te interpreteren.
+	De Euclidische factor $\exp(-S_E)$ definieert daarentegen een kansmaat (na normalisatie), waarna correlaties als echte integralen bestaan.
+	
+	% ============================================================
+	% DEEL III — Interacties, verstoringstheorie, renormalisatie
+	% ============================================================
+	\part{Interactie, diagrammen, regularisatie en renormalisatie}
+	
+	% =========================
+	% HOOFDSTUK 5 (PASTE-BLOK 7)
+	% =========================
+	\chapter{Interactie via Radon--Nikodym: $\phi^4$ in Euclidische ruimte}
+	
+	\section{Interactie als gewogen maat}
+	Formeel:
+	\[
+	\mu(\dd\phi) \propto e^{-\int \frac{\lambda}{4!}\phi(x)^4\dd x}\,\mu_0(\dd\phi).
+	\]
+	Rigoureus: voor cutoff $\Lambda$ (UV) en volume $V$ (IR) definieer
+	\[
+	\mu_{\Lambda,V}(\dd\phi)=\frac{1}{Z_{\Lambda,V}}
+	\exp\left(-\int_V \frac{\lambda}{4!}:\!\phi_\Lambda(x)^4\!:\,\dd x\right)\mu_{0,\Lambda}(\dd\phi),
+	\]
+	met een geschikte regularisatie $\phi_\Lambda$ en Wick-ordening $:\cdot:$.
+	
+	\begin{remark}
+		Wick-ordening is geen cosmetiek: zonder normal ordering divergeert $\phi(x)^2$ al als random variabele onder $\mu_0$.
+	\end{remark}
+	
+	\section{Genererende functionaal en cumulanten}
+	Definieer voor bron $J$ (testfunctie):
+	\[
+	Z_{\Lambda,V}[J]\coloneqq \int \exp\left(\int J\phi \right)\,\mu_{\Lambda,V}(\dd\phi),
+	\quad
+	W_{\Lambda,V}[J]=\log Z_{\Lambda,V}[J].
+	\]
+	Connected correlaties zijn functionele afgeleiden van $W$.
+	
+	% =========================
+	% HOOFDSTUK 6 (PASTE-BLOK 8)
+	% =========================
+	\chapter{Feynmandiagrammen als moment-identiteiten van Gaussiaanse maten}
+	
+	\section{Wick-theorema en grafen}
+	Voor de vrije maat $\mu_0$ reduceert elke momentverwachting tot sommen over pairings.
+	In aanwezigheid van een polynomiale interactie ontstaat een combinatoriek van contracties die netjes wordt geclassificeerd door grafen
+	(Feynmandiagrammen). Wiskundig: dit zijn identiteiten in de algebra van cumulanten (linked cluster expansions).
+	
+	\section{Ultraviolet divergenties als korte-afstand singulariteiten}
+	De covariantie-kern $C(x-y)$ is singulier voor $x\to y$ in $d\ge 2$.
+	Diagrammen bevatten producten van zulke kernen geëvalueerd op samenvallende punten, wat UV-divergenties veroorzaakt.
+	Daarom zijn regularisatie en renormalisatie noodzakelijk.
+	
+	% =========================
+	% HOOFDSTUK 7 (PASTE-BLOK 9)
+	% =========================
+	\chapter{Regularisatie en renormalisatie: een maat-theoretisch perspectief}
+	
+	\section{Cutoff, dimensionele regularisatie, Pauli--Villars}
+	In een rigoureuze constructie zijn cutoff-regularisaties (lattice of momentum cutoff) het meest natuurlijk: ze leveren echte eindige-dimensionale integralen.
+	Dimensionele regularisatie is analytisch zeer efficiënt maar minder direct maat-theoretisch.
+	
+	\section{Renormalisatie als herparametrisatie}
+	Renormalisatie herdefinieert de parameters zodat fysische observabelen eindig blijven bij verwijderen van de cutoff.
+	Conceptueel: men bekijkt een familie van maatregelen $\mu_\Lambda$ en zoekt een flow in parameter-ruimte zodat correlaties convergeren.
+	
+	\section{Callan--Symanzik en RG (schets)}
+	De renormalisatiegroep beschrijft hoe effectieve koppelingen veranderen met schaal.
+	Rigoureus is dit verwant aan de theorie van schaaltransformaties op maatregelen (Wilsonian RG).
+	
+	% ============================================================
+	% DEEL IV — Fermionen, gaugevelden, FP en BRST
+	% ============================================================
+	\part{Fermionische integralen, gaugefixing en BRST}
+	
+	% =========================
+	% HOOFDSTUK 8 (PASTE-BLOK 10)
+	% =========================
+	\chapter{Grassmann-algebra en fermionische functionaalintegralen}
+	
+	\section{Grassmann-variabelen}
+	\begin{definition}[Grassmann-algebra]
+		Een Grassmann-algebra $\Lambda(\eta_1,\dots,\eta_n)$ is gegenereerd door anticommuterende generatoren:
+		$\eta_i\eta_j=-\eta_j\eta_i$, in het bijzonder $\eta_i^2=0$.
+	\end{definition}
+	
+	\section{Berezin-integratie}
+	Berezin-integratie is gedefinieerd door lineariteit en de regels
+	\[
+	\int \dd \eta\, 1 = 0,\qquad \int \dd \eta\, \eta = 1.
+	\]
+	Voor meerdere variabelen bepaalt men de orde.
+	
+	\section{Gaussiaanse fermionische integralen}
+	Voor een inverteerbare matrix $A$ geldt
+	\[
+	\int \prod_i \dd\bar\eta_i\,\dd\eta_i\;
+	\exp\left(-\sum_{i,j}\bar\eta_i A_{ij}\eta_j\right)
+	= \det A.
+	\]
+	Dit verklaart determinanten van Dirac-operatoren in effectieve acties.
+	
+	% =========================
+	% HOOFDSTUK 9 (PASTE-BLOK 11)
+	% =========================
+	\chapter{Gaugevelden, Faddeev--Popov en BRST (rigoureuze kernideeën)}
+	
+	\section{Redundantie en quotient}
+	Gauge-invariantie betekent dat de configuratieruimte een quotient is $\cA/\cG$ (verbindingen modulo gaugegroep).
+	Een naïeve integraal over $\cA$ overcount.
+	
+	\section{Faddeev--Popov (formeel, met rigoureuze waarschuwing)}
+	Men voegt een delta-functionaal voor gaugevoorwaarde $G(A)=0$ in en de FP-determinant:
+	\[
+	1 = \Delta_{FP}(A)\int_{\cG}\delta(G(A^g))\,\dd g.
+	\]
+	In een lattice-formulering kan men gaugefixing vermijden of zorgvuldig implementeren.
+	
+	\section{BRST als cohomologie}
+	BRST formaliseert gauge-invariantie via een nilpotente differentiaal $s$.
+	Observabelen zijn cohomologieklassen van $s$.
+	
+	% ============================================================
+	% DEEL V — Niet-perturbatief: lattice, instantonen, effectieve actie
+	% ============================================================
+	\part{Niet-perturbatieve methoden}
+	
+	% =========================
+	% HOOFDSTUK 10 (PASTE-BLOK 12)
+	% =========================
+	\chapter{Lattice-regularisatie als rigoureuze definitie van de maat}
+	
+	\section{Eindige dimensie}
+	Neem een rooster $\Lambda\subset \Z^d$ eindig. Dan is $\phi:\Lambda\to\R$ een vector in $\R^{|\Lambda|}$ en
+	\[
+	Z_\Lambda=\int_{\R^{|\Lambda|}} \exp(-S_\Lambda(\phi))\,\prod_{x\in\Lambda}\dd\phi_x
+	\]
+	is een echte Lebesgue-integraal. Correlaties zijn goed gedefinieerd.
+	
+	\section{Continuüm-limiet}
+	De limiet roosterspatiëring $a\to 0$ en volume $\to\infty$ is het kernprobleem: men zoekt convergentie (in distributiezin)
+	van Schwingerfuncties en verificatie van OS-axioma’s.
+	
+	% =========================
+	% HOOFDSTUK 11 (PASTE-BLOK 13)
+	% =========================
+	\chapter{Instantonen en semiklassieke expansies (schets met rigoureuze context)}
+	
+	\section{Stationaire punten van de Euclidische actie}
+	Instantonen zijn niet-triviale oplossingen van de Euclidische veldvergelijkingen met eindige actie.
+	Semiklassiek benadert men de maat nabij zulke configuraties via functionele determinanten.
+	
+	\section{Functionele determinanten}
+	Determinanten van differentiaaloperatoren worden gedefinieerd via zeta-regularisatie of warmte-kernel methoden:
+	\[
+	\log \det K = -\zeta'_K(0).
+	\]
+	Dit is wiskundig consistent en sluit aan bij effectieve acties.
+	
+	% ============================================================
+	% Appendices (rigoureuze hulpmiddelen)
+	% ============================================================
+	\appendix
+	\part{Appendices}
+	
+	% =========================
+	% APPENDIX A (PASTE-BLOK 14)
+	% =========================
+	\chapter{Sobolev-ruimten, distributies en groene operatoren}
+	
+	\section{Sobolev-ruimten}
+	Definieer $H^s(\R^d)$ via Fourier:
+	\[
+	\normH{f}_{H^s}^2=\int_{\R^d}(1+|k|^2)^s|\hat f(k)|^2\,\dd k.
+	\]
+	De operator $(-\Delta+m^2)^{-1}$ is goed gedefinieerd als begrensde operator tussen geschikte $H^s$-ruimten.
+	
+	% =========================
+	% APPENDIX B (PASTE-BLOK 15)
+	% =========================
+	\chapter{Gaussian measures: kernformules}
+	Voor een Gaussiaanse maat met covariantie $C$ geldt voor geschikte $J$:
+	\[
+	\EE\left[e^{\phi(J)}\right]=\exp\left(\frac12 \inner{J}{CJ}\right),
+	\]
+	en Wick-contracties volgen uit differentiëren naar $J$.
+	
+	% =========================
+	% Bibliografie (PASTE-BLOK 16)
+	% =========================
+	\backmatter
+	\chapter*{Literatuurnotities}
+	\addcontentsline{toc}{chapter}{Literatuurnotities}
+	
+	Aanbevolen referenties (klassiek en constructief):
+	\begin{itemize}[leftmargin=*]
+		\item Glimm \& Jaffe — \emph{Quantum Physics: A Functional Integral Point of View}.
+		\item Simon — \emph{The $P(\phi)_2$ Euclidean (Quantum) Field Theory}.
+		\item Rivasseau — \emph{From Perturbative to Constructive Renormalization}.
+		\item Osterwalder \& Schrader — oorspronkelijke OS-artikels over Euclidische reconstructie.
+		\item Itzykson \& Zuber / Peskin \& Schroeder — fysische QFT-werktaal (met minder rigor).
+	\end{itemize}
+	
+\end{document}
