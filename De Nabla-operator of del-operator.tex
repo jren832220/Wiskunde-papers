@@ -1,0 +1,489 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[dutch]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+
+\geometry{margin=2.3cm}
+\setlist[itemize]{topsep=4pt,itemsep=2pt}
+\setlist[enumerate]{topsep=4pt,itemsep=6pt}
+
+\title{De nabla (del) operator \texorpdfstring{$\nabla$}{∇}: werking, betekenis en toepassingen in de fysica}
+\author{Jeroen Vermeulen}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{tcolorbox}[colback=gray!6,colframe=gray!40,title=Doel van dit document]
+        Dit document legt de nabla-operator \(\nabla\) diepgaand uit, met nadruk op:
+        \begin{itemize}
+            \item \textbf{Wat \(\nabla\) precies is} (een differentiaaloperator) en hoe ze werkt op verschillende objecten.
+            \item \textbf{De drie kernbewerkingen} die eruit voortkomen: gradi\"ent, divergentie en rotatie (curl).
+            \item \textbf{Fysische interpretaties} (flux, bronsterkte, werveling) en waar dit terugkomt in o.a. elektromagnetisme, vloeistoffen en golfvoortplanting.
+            \item \textbf{Rekenen in verschillende co\"ordinaten} (Cartesisch, cilinder, bol).
+            \item \textbf{Oefeningen met uitgewerkte oplossingen}.
+        \end{itemize}
+    \end{tcolorbox}
+
+    \tableofcontents
+    \newpage
+
+% ============================================================
+    \section{Wat is de nabla-operator?}
+    De nabla-operator (ook \emph{del}-operator) is een \textbf{vector-differentiaaloperator}. In Cartesische co\"ordinaten \((x,y,z)\) defini\"eren we
+    \begin{equation}
+        \nabla \;\coloneqq\; \vb*{e}_x \pdv{}{x} + \vb*{e}_y \pdv{}{y} + \vb*{e}_z \pdv{}{z}.
+    \end{equation}
+    Hier zijn \(\vb*{e}_x,\vb*{e}_y,\vb*{e}_z\) de eenheidsvectoren, en \(\pdv{}{x}\) enz. partiële afgeleiden.
+
+    \subsection{Belangrijk: \(\nabla\) is geen gewone vector}
+    Hoewel \(\nabla\) er uitziet als een vector, is het \textbf{een operator} die pas betekenis krijgt wanneer ze op een veld werkt.
+
+    Je kan haar zien als:
+    \begin{itemize}
+        \item een \textbf{richting-gevoelige differentiatormachine};
+        \item een compact notatiesysteem dat meerdere afgeleiden bundelt;
+        \item een object dat zich formeel als een vector gedraagt onder co\"ordinatentransformaties, maar met differentiaaloperatoren als componenten.
+    \end{itemize}
+
+    \subsection{Waarop kan \(\nabla\) werken?}
+    \(\nabla\) kan werken op:
+    \begin{itemize}
+        \item een \textbf{scalair veld} \(\phi(\vb{r})\) (bv. temperatuur, potentiaal, dichtheid);
+        \item een \textbf{vectorveld} \(\vb{A}(\vb{r})\) (bv. snelheidsveld, elektrisch veld);
+        \item producten/combinaties van velden (waar dan productregels, kettingregels, enz. spelen).
+    \end{itemize}
+
+% ============================================================
+    \section{De drie kernoperators uit \texorpdfstring{$\nabla$}{∇}}
+    Uit \(\nabla\) volgen drie fundamentele differentiaaloperatoren:
+    \begin{enumerate}
+        \item \textbf{Gradi\"ent:} \(\nabla \phi\)
+        \item \textbf{Divergentie:} \(\nabla\cdot\vb{A}\)
+        \item \textbf{Rotatie (curl):} \(\nabla\times\vb{A}\)
+    \end{enumerate}
+    En daarnaast: de \textbf{Laplaciaan} \(\nabla^2\), die je kan zien als \(\nabla\cdot\nabla\) toegepast op een scalair veld.
+
+% ------------------------------------------------------------
+    \subsection{Gradi\"ent \texorpdfstring{$\nabla \phi$}{∇φ}}
+    Laat \(\phi(x,y,z)\) een scalair veld zijn. Dan
+    \begin{equation}
+        \nabla \phi =
+        \vb*{e}_x \pdv{\phi}{x} + \vb*{e}_y \pdv{\phi}{y} + \vb*{e}_z \pdv{\phi}{z}.
+    \end{equation}
+
+    \subsubsection{Geometrische betekenis}
+    \(\nabla \phi\) wijst in de richting van de \textbf{steilste toename} van \(\phi\).
+    De grootte \(\abs{\nabla \phi}\) is de \textbf{maximale stijgsnelheid per lengte-eenheid}.
+
+    Formeel: voor een kleine verplaatsing \(d\vb{r}\) geldt
+    \begin{equation}
+        d\phi = \nabla\phi \cdot d\vb{r}.
+    \end{equation}
+    Dit is het \textbf{totale differentiaal} in vectorvorm: de gradi\"ent is de unieke vector die deze relatie voor alle \(d\vb{r}\) vervult.
+
+    \subsubsection{Niveaumanifolds en orthogonaliteit}
+    Op een niveauoppervlak \(\phi(\vb{r})=\text{const}\) is \(d\phi=0\), dus
+    \begin{equation}
+        0 = \nabla\phi\cdot d\vb{r}.
+    \end{equation}
+    Dat betekent: \(\nabla\phi\) staat loodrecht op alle verplaatsingen \(d\vb{r}\) die in het niveauoppervlak liggen. \\
+    \(\Rightarrow\) \(\nabla\phi\) is \textbf{normaal} op het niveauoppervlak.
+
+    \subsubsection{Fysische voorbeelden}
+    \begin{itemize}
+        \item Elektrostatica: \(\vb{E} = -\nabla V\) (elektrisch veld is minus gradi\"ent van potentiaal).
+        \item Mechanica: \(\vb{F} = -\nabla U\) (kracht uit potenti\"ele energie).
+        \item Diffusie: flux \(\vb{J}\) is vaak proportioneel aan \(-\nabla c\) (Fick).
+        \item Warmtegeleiding: \(\vb{q} = -k\nabla T\) (Fourier).
+    \end{itemize}
+
+% ------------------------------------------------------------
+    \subsection{Divergentie \texorpdfstring{$\nabla\cdot\vb{A}$}{∇·A}}
+    Laat \(\vb{A}(x,y,z) = (A_x,A_y,A_z)\). Dan
+    \begin{equation}
+        \nabla\cdot\vb{A} = \pdv{A_x}{x}+\pdv{A_y}{y}+\pdv{A_z}{z}.
+    \end{equation}
+
+    \subsubsection{Lokale bronsterkte: flux per volume}
+    Divergentie meet de \textbf{netto uitstroming} (flux naar buiten) per volume-eenheid in het limietgeval van een heel klein volume.
+
+    Heuristisch: neem een klein volume \(V\) rond punt \(\vb{r}\), met gesloten oppervlak \(S=\partial V\). Dan:
+    \begin{equation}
+        \nabla\cdot\vb{A}(\vb{r}) = \lim_{V\to 0}\frac{1}{V}\iint_{\partial V}\vb{A}\cdot d\vb{S}.
+    \end{equation}
+    Dit is de \textbf{differenti\"ele vorm} van de Gauss-divergentiestelling.
+
+    \subsubsection{Fysische interpretatie}
+    \begin{itemize}
+        \item \(\nabla\cdot\vb{A} > 0\): punt gedraagt zich als \textbf{bron} (meer uitstroom dan instroom).
+        \item \(\nabla\cdot\vb{A} < 0\): \textbf{put} (sink).
+        \item \(\nabla\cdot\vb{A} = 0\): \textbf{soleno\"idaal} veld (incompressibel/bronvrij in die regio).
+    \end{itemize}
+
+    \subsubsection{Voorbeelden in fysica}
+    \begin{itemize}
+        \item Elektromagnetisme: \(\nabla\cdot\vb{E}=\rho/\varepsilon_0\) (ladingdichtheid is bron van \(\vb{E}\)).
+        \item Magnetisme: \(\nabla\cdot\vb{B}=0\) (geen magnetische monopolen).
+        \item Vloeistoffen: continu\"iteit \(\partial_t\rho+\nabla\cdot(\rho\vb{v})=0\). In incompressibele stroming (\(\rho\) constant): \(\nabla\cdot\vb{v}=0\).
+    \end{itemize}
+
+% ------------------------------------------------------------
+    \subsection{Rotatie (curl) \texorpdfstring{$\nabla\times\vb{A}$}{∇×A}}
+    In Cartesische co\"ordinaten:
+    \begin{equation}
+        \nabla\times\vb{A} =
+        \begin{vmatrix}
+            \vb*{e}_x & \vb*{e}_y & \vb*{e}_z\\
+            \pdv{}{x} & \pdv{}{y} & \pdv{}{z}\\
+            A_x & A_y & A_z
+        \end{vmatrix}.
+    \end{equation}
+
+    \subsubsection{Lokale circulatie: wervelsterkte}
+    Curl meet de \textbf{circulatie per oppervlakte} in het limietgeval:
+    \begin{equation}
+        (\nabla\times\vb{A})\cdot \vb{n} = \lim_{S\to 0}\frac{1}{S}\oint_{\partial S}\vb{A}\cdot d\vb{l},
+    \end{equation}
+    waar \(S\) een klein oppervlakje is met normaal \(\vb{n}\), en \(\partial S\) de randcurve.
+
+    Dit is de \textbf{differenti\"ele vorm} van de Stokes-stelling.
+
+    \subsubsection{Fysische interpretatie}
+    \begin{itemize}
+        \item Curl nul: veld is \textbf{irrotationeel} (lokaal geen werveling).
+        \item Curl niet nul: er is lokale \textbf{rotatie/werveling}.
+    \end{itemize}
+
+    \subsubsection{Voorbeelden}
+    \begin{itemize}
+        \item Elektrostatica: \(\nabla\times\vb{E}=0\) (conservatief veld).
+        \item Faraday: \(\nabla\times\vb{E}=-\partial_t \vb{B}\).
+        \item Stromingsleer: vorticiteit \(\boldsymbol{\omega}=\nabla\times\vb{v}\).
+    \end{itemize}
+
+% ------------------------------------------------------------
+    \subsection{Laplaciaan \texorpdfstring{$\nabla^2$}{∇²}}
+    De Laplaciaan op een scalair veld \(\phi\) is:
+    \begin{equation}
+        \nabla^2\phi \;=\; \nabla\cdot(\nabla\phi)
+        \;=\; \pdv[2]{\phi}{x}+\pdv[2]{\phi}{y}+\pdv[2]{\phi}{z}.
+    \end{equation}
+
+    \subsubsection{Interpretatie (intu\"itief)}
+    \(\nabla^2\phi\) meet in zekere zin \textbf{hoeveel \(\phi\) lokaal afwijkt van haar gemiddelde} in een kleine omgeving.
+    In veel fysica verschijnt dit als \textbf{diffusie/spreiding/curvature-term}.
+
+    \subsubsection{Typische fysische vergelijkingen}
+    \begin{itemize}
+        \item Poisson: \(\nabla^2 V = -\rho/\varepsilon_0\).
+        \item Laplace: \(\nabla^2 V=0\) (bronvrije regio).
+        \item Warmtevergelijking: \(\partial_t T = \alpha \nabla^2 T\).
+        \item Golfvergelijking: \(\partial_t^2 \psi = c^2 \nabla^2 \psi\).
+        \item Schr\"odinger: \(-\frac{\hbar^2}{2m}\nabla^2\psi + V\psi = i\hbar \partial_t\psi\).
+    \end{itemize}
+
+% ============================================================
+    \section{Productregels en nuttige vectoridentiteiten}
+    Omdat \(\nabla\) een differentiaaloperator is, gelden productregels.
+    Laat \(\phi\) scalair en \(\vb{A},\vb{B}\) vectorvelden zijn.
+
+    \subsection{Productregels}
+    \begin{align}
+        \nabla(\phi\psi) &= \phi\nabla\psi + \psi\nabla\phi,\\
+        \nabla\cdot(\phi\vb{A}) &= \nabla\phi\cdot\vb{A} + \phi(\nabla\cdot\vb{A}),\\
+        \nabla\times(\phi\vb{A}) &= \nabla\phi\times\vb{A} + \phi(\nabla\times\vb{A}).
+    \end{align}
+
+    \subsection{Identiteiten (zeer belangrijk in fysica)}
+    \begin{align}
+        \nabla\times(\nabla\phi) &= \vb{0} \qquad \text{(curl van gradi\"ent is nul)},\\
+        \nabla\cdot(\nabla\times\vb{A}) &= 0 \qquad \text{(div van curl is nul)},\\
+        \nabla\times(\nabla\times\vb{A}) &= \nabla(\nabla\cdot\vb{A}) - \nabla^2 \vb{A}.
+    \end{align}
+    Die laatste is cruciaal om golfvergelijkingen voor EM-velden af te leiden.
+
+% ============================================================
+    \section{Co\"ordinatenstelsels: waarom \texorpdfstring{$\nabla$}{∇} ingewikkelder wordt}
+    In Cartesische co\"ordinaten zijn basisvectoren constant.
+    In kromlijnige co\"ordinaten (cilindrisch, bol) hangen basisvectoren en lengteschalen af van de positie.
+    Daarom verschijnen \textbf{schaalfactoren}.
+
+    \subsection{Cilindrische co\"ordinaten \((r,\varphi,z)\)}
+    \begin{align}
+        \nabla \phi &=
+        \vb*{e}_r \pdv{\phi}{r} +
+        \vb*{e}_\varphi \frac{1}{r}\pdv{\phi}{\varphi} +
+        \vb*{e}_z \pdv{\phi}{z},\\[4pt]
+        \nabla\cdot\vb{A} &=
+        \frac{1}{r}\pdv{}{r}\!\big(rA_r\big) + \frac{1}{r}\pdv{A_\varphi}{\varphi} + \pdv{A_z}{z},\\[4pt]
+        \nabla^2\phi &=
+        \frac{1}{r}\pdv{}{r}\!\left(r\pdv{\phi}{r}\right)
+        + \frac{1}{r^2}\pdv[2]{\phi}{\varphi}
+        + \pdv[2]{\phi}{z}.
+    \end{align}
+
+    \subsection{Bolco\"ordinaten \((r,\theta,\varphi)\)}
+    \begin{align}
+        \nabla \phi &=
+        \vb*{e}_r \pdv{\phi}{r} +
+        \vb*{e}_\theta \frac{1}{r}\pdv{\phi}{\theta} +
+        \vb*{e}_\varphi \frac{1}{r\sin\theta}\pdv{\phi}{\varphi},\\[4pt]
+        \nabla^2\phi &=
+        \frac{1}{r^2}\pdv{}{r}\!\left(r^2\pdv{\phi}{r}\right)
+        +\frac{1}{r^2\sin\theta}\pdv{}{\theta}\!\left(\sin\theta\pdv{\phi}{\theta}\right)
+        +\frac{1}{r^2\sin^2\theta}\pdv[2]{\phi}{\varphi}.
+    \end{align}
+
+    \begin{tcolorbox}[colback=yellow!7,colframe=yellow!40,title=Praktische tip]
+        In fysica kies je co\"ordinaten die de symmetrie volgen:
+        \begin{itemize}
+            \item puntlading / sferische massa \(\rightarrow\) bolco\"ordinaten;
+            \item oneindige draad / cilinder \(\rightarrow\) cilindrisch;
+            \item vlakke problemen \(\rightarrow\) Cartesisch.
+        \end{itemize}
+        Dan worden \(\nabla\)-bewerkingen vaak drastisch eenvoudiger.
+    \end{tcolorbox}
+
+% ============================================================
+    \section{Waar komt \texorpdfstring{$\nabla$}{∇} overal terug in de fysica?}
+    Hier is het kernidee: \(\nabla\) vertaalt \textbf{lokale veranderingen} naar \textbf{globale wetten} via integraalstellingen.
+
+    \subsection{Elektrostatica en potentiaaltheorie}
+    \begin{align}
+        \vb{E} &= -\nabla V,\\
+        \nabla\cdot\vb{E} &= \rho/\varepsilon_0 \quad \Rightarrow \quad \nabla^2 V = -\rho/\varepsilon_0.
+    \end{align}
+    Interpretatie: ladingdichtheid \(\rho\) is bron van veldlijnen; potentiaal voldoet aan Poisson.
+
+    \subsection{Maxwellvergelijkingen (differentiaalvorm)}
+    \begin{align}
+        \nabla\cdot\vb{E} &= \rho/\varepsilon_0,\\
+        \nabla\cdot\vb{B} &= 0,\\
+        \nabla\times\vb{E} &= -\pdv{\vb{B}}{t},\\
+        \nabla\times\vb{B} &= \mu_0\vb{J}+\mu_0\varepsilon_0\pdv{\vb{E}}{t}.
+    \end{align}
+    Met vectoridentiteiten kan je hieruit EM-golfvergelijkingen afleiden.
+
+    \subsection{Continu\"iteit en behoudswetten}
+    \begin{equation}
+        \pdv{\rho}{t} + \nabla\cdot(\rho \vb{v}) = 0.
+    \end{equation}
+    Dit is massabehoud: verandering in dichtheid in een volume = netto instroom.
+
+    \subsection{Vloeistofdynamica (Navier--Stokes, schets)}
+    Voor een Newtoniaanse vloeistof:
+    \begin{equation}
+        \rho\left(\pdv{\vb{v}}{t}+(\vb{v}\cdot\nabla)\vb{v}\right)
+        = -\nabla p + \mu \nabla^2 \vb{v} + \rho \vb{f}.
+    \end{equation}
+    Hier zie je:
+    \begin{itemize}
+        \item \(-\nabla p\): kracht door drukgradi\"ent;
+        \item \(\mu\nabla^2\vb{v}\): viscositeit/diffusie van impuls;
+        \item \((\vb{v}\cdot\nabla)\vb{v}\): convectieterm (niet-lineair).
+    \end{itemize}
+
+    \subsection{Diffusie en warmte}
+    \begin{equation}
+        \pdv{u}{t} = D\nabla^2 u.
+    \end{equation}
+    \(\nabla^2\) is de operator die ruimtelijke spreiding encodeert.
+
+    \subsection{Golven}
+    \begin{equation}
+        \pdv[2]{\psi}{t} = c^2 \nabla^2 \psi.
+    \end{equation}
+    In 3D: de Laplaciaan bepaalt hoe kromming van \(\psi\) leidt tot versnelling in de tijd.
+
+% ============================================================
+    \section{Oefeningen (met volledige uitwerkingen)}
+    \subsection*{Notatie}
+    We werken standaard in Cartesische co\"ordinaten tenzij anders vermeld.
+    Gebruik: \(\vb{r}=(x,y,z)\).
+
+% ------------------------------------------------------------
+    \subsection{Oefening 1: gradi\"ent en richting van snelste stijging}
+    Gegeven \(\phi(x,y,z)=x^2y+3z\).
+    \begin{enumerate}
+        \item Bereken \(\nabla\phi\).
+        \item Bepaal \(\nabla\phi\) in het punt \((1,2,-1)\).
+        \item Geef de eenheidsrichting van snelste stijging in dat punt.
+    \end{enumerate}
+
+    \subsubsection*{Oplossing}
+    \begin{enumerate}
+        \item
+        \[
+            \pdv{\phi}{x}=2xy,\qquad \pdv{\phi}{y}=x^2,\qquad \pdv{\phi}{z}=3.
+        \]
+        Dus
+        \[
+            \nabla\phi=(2xy)\vb*{e}_x+(x^2)\vb*{e}_y+3\vb*{e}_z.
+        \]
+        \item In \((1,2,-1)\):
+        \[
+            \nabla\phi(1,2,-1) = (2\cdot1\cdot2)\vb*{e}_x + (1^2)\vb*{e}_y + 3\vb*{e}_z
+            = 4\vb*{e}_x+\vb*{e}_y+3\vb*{e}_z.
+        \]
+        \item De richting van snelste stijging is de genormaliseerde gradi\"ent:
+        \[
+            \hat{\vb{u}} = \frac{\nabla\phi}{\abs{\nabla\phi}}
+            = \frac{(4,1,3)}{\sqrt{4^2+1^2+3^2}}
+            = \frac{(4,1,3)}{\sqrt{26}}.
+        \]
+    \end{enumerate}
+
+% ------------------------------------------------------------
+    \subsection{Oefening 2: divergentie en bron/put interpretatie}
+    Beschouw \(\vb{A}(x,y,z)=(x,\,y,\,z)\).
+    \begin{enumerate}
+        \item Bereken \(\nabla\cdot\vb{A}\).
+        \item Interpreteer fysisch (bron/put?) in elk punt.
+        \item Bereken de flux door de bol \(x^2+y^2+z^2=R^2\) en controleer met Gauss.
+    \end{enumerate}
+
+    \subsubsection*{Oplossing}
+    \begin{enumerate}
+        \item
+        \[
+            \nabla\cdot\vb{A}=\pdv{x}{x}+\pdv{y}{y}+\pdv{z}{z}=1+1+1=3.
+        \]
+        \item Divergentie is overal positief en constant: elk punt gedraagt zich als een \emph{uniforme bron}.
+        \item Op de bol is \(\vb{A}=\vb{r}\). De uitwendige normaal is \(\hat{\vb{n}}=\vb{r}/R\).
+        Dus op het oppervlak:
+        \[
+            \vb{A}\cdot \hat{\vb{n}} = \vb{r}\cdot \frac{\vb{r}}{R}=\frac{r^2}{R}=\frac{R^2}{R}=R.
+        \]
+        Flux:
+        \[
+            \Phi = \iint \vb{A}\cdot d\vb{S} = \iint (\vb{A}\cdot\hat{\vb{n}})\, dS = \iint R\, dS = R \cdot 4\pi R^2 = 4\pi R^3.
+        \]
+        Gauss-controle:
+        \[
+            \Phi = \iiint_V (\nabla\cdot \vb{A})\, dV = \iiint_V 3\, dV = 3\cdot \frac{4}{3}\pi R^3 = 4\pi R^3.
+        \]
+        Consistent.
+    \end{enumerate}
+
+% ------------------------------------------------------------
+    \subsection{Oefening 3: curl en conservativiteit}
+    Gegeven \(\vb{F}(x,y,z)=(-y,\,x,\,0)\).
+    \begin{enumerate}
+        \item Bereken \(\nabla\times \vb{F}\).
+        \item Is \(\vb{F}\) conservatief in \(\mathbb{R}^3\)? Motiveer.
+        \item Bereken de circulatie \(\oint_C \vb{F}\cdot d\vb{l}\) rond de cirkel \(x^2+y^2=R^2\) in het vlak \(z=0\) (tegenwijzerzin).
+    \end{enumerate}
+
+    \subsubsection*{Oplossing}
+    \begin{enumerate}
+        \item
+        \[
+            \nabla\times\vb{F}=
+            \begin{vmatrix}
+                \vb*{e}_x & \vb*{e}_y & \vb*{e}_z\\
+                \pdv{}{x} & \pdv{}{y} & \pdv{}{z}\\
+                -y & x & 0
+            \end{vmatrix}
+            =
+            \left(0-0\right)\vb*{e}_x
+            -\left(0-0\right)\vb*{e}_y
+            +\left(\pdv{x}{x}-\pdv{(-y)}{y}\right)\vb*{e}_z
+            =
+            (1-(-1))\vb*{e}_z = 2\vb*{e}_z.
+        \]
+        \item Omdat \(\nabla\times\vb{F}\neq \vb{0}\), is \(\vb{F}\) niet irrotationeel en dus niet conservatief (globaal) in \(\mathbb{R}^3\).
+        \item Parameteriseer \(C\): \(x=R\cos t,\; y=R\sin t,\; t\in[0,2\pi]\).
+        Dan \(d\vb{l}=(\dot x,\dot y,0)\,dt=(-R\sin t, R\cos t,0)\,dt\).
+        En \(\vb{F}=(-y,x,0)=(-R\sin t, R\cos t,0)\).
+        Dus:
+        \[
+            \vb{F}\cdot d\vb{l} = (-R\sin t, R\cos t,0)\cdot(-R\sin t, R\cos t,0)\,dt = R^2(\sin^2 t+\cos^2 t)\,dt=R^2\,dt.
+        \]
+        Circulatie:
+        \[
+            \oint_C \vb{F}\cdot d\vb{l} = \int_0^{2\pi} R^2\,dt = 2\pi R^2.
+        \]
+    \end{enumerate}
+
+% ------------------------------------------------------------
+    \subsection{Oefening 4: Laplaciaan en harmonische functies}
+    Laat \(\phi(x,y,z)=x^2+y^2-2z^2\).
+    \begin{enumerate}
+        \item Bereken \(\nabla^2\phi\).
+        \item Is \(\phi\) harmonisch? (d.w.z. voldoet \(\nabla^2\phi=0\)?)
+    \end{enumerate}
+
+    \subsubsection*{Oplossing}
+    \[
+        \pdv[2]{\phi}{x}=2,\qquad \pdv[2]{\phi}{y}=2,\qquad \pdv[2]{\phi}{z}=-4.
+    \]
+    Dus
+    \[
+        \nabla^2\phi = 2+2-4=0.
+    \]
+    Ja, \(\phi\) is harmonisch.
+
+% ------------------------------------------------------------
+    \subsection{Oefening 5: van integraal naar differentiaal (continu\"iteit)}
+    Stel dat een hoeveelheid \(Q\) met dichtheid \(\rho(\vb{r},t)\) stroomt met flux \(\vb{J}(\vb{r},t)\).
+    Je weet dat voor elk vast volume \(V\):
+    \[
+        \dv{}{t}\iiint_V \rho\, dV = - \iint_{\partial V} \vb{J}\cdot d\vb{S}.
+    \]
+    \begin{enumerate}
+        \item Gebruik de divergentietheorema om de rechterkant om te schrijven als een volume-integraal.
+        \item Leid af dat lokaal geldt: \(\partial_t\rho + \nabla\cdot\vb{J}=0\).
+    \end{enumerate}
+
+    \subsubsection*{Oplossing}
+    \begin{enumerate}
+        \item Divergentiestelling:
+        \[
+            \iint_{\partial V}\vb{J}\cdot d\vb{S} = \iiint_V (\nabla\cdot\vb{J})\, dV.
+        \]
+        Dus:
+        \[
+            \dv{}{t}\iiint_V \rho\, dV = -\iiint_V (\nabla\cdot\vb{J})\, dV.
+        \]
+        \item Breng alles samen:
+        \[
+            \iiint_V \pdv{\rho}{t}\, dV + \iiint_V (\nabla\cdot\vb{J})\, dV = 0
+            \quad\Rightarrow\quad
+            \iiint_V \left(\pdv{\rho}{t} + \nabla\cdot\vb{J}\right)dV = 0.
+        \]
+        Omdat dit voor \emph{elk} volume \(V\) geldt, moet de integrand overal nul zijn:
+        \[
+            \pdv{\rho}{t} + \nabla\cdot\vb{J}=0.
+        \]
+    \end{enumerate}
+
+% ============================================================
+    \section{Samenvatting in 10 regels}
+    \begin{tcolorbox}[colback=green!6,colframe=green!35,title=Cheat sheet]
+        \begin{itemize}
+            \item \(\nabla = (\partial_x,\partial_y,\partial_z)\) (Cartesisch): vector-differentiaaloperator.
+            \item \(\nabla\phi\): gradi\"ent = richting en grootte van snelste stijging.
+            \item \(\nabla\cdot\vb{A}\): divergentie = netto flux naar buiten per volume (bron/put).
+            \item \(\nabla\times\vb{A}\): curl = circulatie/werveling per oppervlak.
+            \item \(\nabla^2\phi = \nabla\cdot\nabla\phi\): Laplaciaan = diffusie/curvature-operator.
+            \item Gauss: \(\iiint (\nabla\cdot\vb{A})dV = \iint \vb{A}\cdot d\vb{S}\).
+            \item Stokes: \(\iint (\nabla\times\vb{A})\cdot d\vb{S} = \oint \vb{A}\cdot d\vb{l}\).
+            \item \(\nabla\times(\nabla\phi)=0\), \(\nabla\cdot(\nabla\times\vb{A})=0\).
+            \item Maxwell, continu\"iteit, Navier--Stokes, diffusie en golven zijn doordrenkt van \(\nabla\).
+            \item Kies co\"ordinaten volgens symmetrie: dan wordt \(\nabla\) hanteerbaar.
+        \end{itemize}
+    \end{tcolorbox}
+
+\end{document}
