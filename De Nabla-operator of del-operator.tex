@@ -474,6 +474,181 @@
         \]
     \end{enumerate}
 
+% ------------------------------------------------------------
+    \subsection{Oefening 6: overgang van Cartesische naar bolcoördinaten}
+
+    Beschouw het scalair veld
+
+    \[
+        \phi(x,y,z) = x^2 + y^2 + z^2.
+    \]
+
+    \begin{enumerate}
+        \item Schrijf de Cartesische coördinaten \((x,y,z)\) uit in functie van bolcoördinaten \((r,\theta,\varphi)\).
+
+        \item Druk vervolgens het veld \(\phi(x,y,z)\) uit in bolcoördinaten.
+
+        \item Bereken de gradiënt \(\nabla \phi\) in Cartesische coördinaten.
+
+        \item Bereken de gradiënt \(\nabla \phi\) rechtstreeks in bolcoördinaten met de formule
+
+        \[
+            \nabla \phi =
+            \vb{e}_r \pdv{\phi}{r} +
+            \vb{e}_\theta \frac{1}{r}\pdv{\phi}{\theta} +
+            \vb{e}_\varphi \frac{1}{r\sin\theta}\pdv{\phi}{\varphi}.
+        \]
+
+        \item Toon aan dat beide resultaten fysisch equivalent zijn.
+    \end{enumerate}
+
+
+% ------------------------------------------------------------
+    \subsection*{Oplossing}
+
+    \begin{enumerate}
+
+        \item De relatie tussen Cartesische en bolcoördinaten is
+
+        \[
+            x = r\sin\theta\cos\varphi
+        \]
+
+        \[
+            y = r\sin\theta\sin\varphi
+        \]
+
+        \[
+            z = r\cos\theta
+        \]
+
+        waar
+
+        \begin{itemize}
+            \item \(r\) de afstand tot de oorsprong is,
+            \item \(\theta\) de poolhoek (hoek t.o.v. de \(z\)-as),
+            \item \(\varphi\) de azimutale hoek in het \(xy\)-vlak.
+        \end{itemize}
+
+        \item Substitueer in \(\phi(x,y,z)\):
+
+        \[
+            \phi = x^2 + y^2 + z^2
+        \]
+
+        \[
+            = (r^2\sin^2\theta\cos^2\varphi)
+            + (r^2\sin^2\theta\sin^2\varphi)
+            + (r^2\cos^2\theta)
+        \]
+
+        Factoriseer \(r^2\):
+
+        \[
+            \phi = r^2(\sin^2\theta\cos^2\varphi
+            + \sin^2\theta\sin^2\varphi
+            + \cos^2\theta)
+        \]
+
+        Gebruik
+
+        \[
+            \cos^2\varphi + \sin^2\varphi = 1
+        \]
+
+        dus
+
+        \[
+            \phi = r^2(\sin^2\theta + \cos^2\theta)
+        \]
+
+        \[
+            \phi = r^2
+        \]
+
+        Het scalair veld hangt dus enkel af van \(r\).
+
+        \item Gradiënt in Cartesische coördinaten:
+
+        \[
+            \nabla\phi =
+            \left(
+                \pdv{\phi}{x},
+                \pdv{\phi}{y},
+                \pdv{\phi}{z}
+            \right)
+        \]
+
+        \[
+            \pdv{\phi}{x} = 2x, \quad
+            \pdv{\phi}{y} = 2y, \quad
+            \pdv{\phi}{z} = 2z
+        \]
+
+        Dus
+
+        \[
+            \nabla\phi = (2x,2y,2z)
+        \]
+
+        Of in vectorvorm
+
+        \[
+            \nabla\phi = 2(x,y,z) = 2\vb{r}.
+        \]
+
+        \item In bolcoördinaten hebben we
+
+        \[
+            \phi = r^2
+        \]
+
+        dus
+
+        \begin{gather*}
+            \pdv{\phi}{r} = 2r\\
+            \pdv{\phi}{\theta} = 0\\
+            \pdv{\phi}{\varphi} = 0\\
+        \end{gather*}
+
+        Invullen in de gradiëntformule:
+
+        \[
+            \nabla\phi =
+            \vb{e}_r (2r)
+        \]
+
+        Dus
+
+        \[
+            \nabla\phi = 2r\,\vb{e}_r.
+        \]
+
+        \item Controle van de equivalentie
+
+        De radiale eenheidsvector is
+
+        \[
+            \vb{e}_r = \frac{\vb{r}}{r}.
+        \]
+
+        Dus
+
+        \begin{gather*}
+            2r\,\vb{e}_r =
+            2r \frac{\vb{r}}{r}\\
+            = 2\vb{r}\\
+        \end{gather*}
+
+        Dit is exact hetzelfde resultaat als in Cartesische coördinaten:
+
+        \[
+            \nabla\phi = 2(x,y,z).
+        \]
+
+        De resultaten zijn dus volledig consistent.
+
+    \end{enumerate}
 % ============================================================
     \section{Samenvatting in 10 regels}
     \begin{tcolorbox}[colback=green!6,colframe=green!35,title=Cheat sheet]
