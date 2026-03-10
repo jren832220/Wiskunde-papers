@@ -36,7 +36,8 @@
         Daarnaast bespreken we de belangrijke rol van partiële afgeleiden in de natuurkunde, met specifieke aandacht voor de kwantummechanica en de kwantumveldentheorie. In die laatste context werken we niet enkel met scalaire grootheden, maar ook met velden en operatoren die variëren in ruimte en tijd. Partiële afgeleiden zijn hierbij onmisbaar om de dynamica van deze grootheden en de interacties tussen verschillende kwantumvelden te doorgronden.
     \end{abstract}
 
-\newpage
+    \newpage
+
 
     \section{Wat is het concept?}
 
@@ -976,5 +977,587 @@ van een punt $(x,y)$. Dan geldt:
 
     De restterm beschrijft dus het verschil tussen de werkelijke functieverandering
     en de lineaire benadering.
+
+
+    \section{De totale differentiaal}
+
+    Wanneer een functie van meerdere variabelen afhangt, kan een kleine verandering
+    in de invoervariabelen een verandering van de functiewaarde veroorzaken. De
+    \textit{totale differentiaal} beschrijft de lineaire benadering van deze verandering.
+
+    \subsection{Definitie}
+
+    Beschouw een functie van twee variabelen
+
+    \[
+        f(x,y).
+    \]
+
+    Als $f$ differentieerbaar is, dan kan de verandering van de functie geschreven
+    worden als
+
+    \[
+        \Delta f
+        =
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+        +
+        R(\Delta x,\Delta y),
+    \]
+
+    waarbij $R(\Delta x,\Delta y)$ de restterm is.
+
+    De \textit{totale differentiaal} van $f$ wordt gedefinieerd als het lineaire
+    deel van deze uitdrukking:
+
+    \[
+        df
+        =
+        \frac{\partial f}{\partial x}dx
+        +
+        \frac{\partial f}{\partial y}dy.
+    \]
+
+    Hierbij stellen $dx$ en $dy$ kleine veranderingen van $x$ en $y$ voor.
+
+    \subsection{Interpretatie}
+
+    De totale differentiaal geeft een lineaire benadering van de verandering
+    van de functie:
+
+    \[
+        \Delta f \approx df.
+    \]
+
+    Voor zeer kleine veranderingen van $x$ en $y$ is deze benadering zeer nauwkeurig.
+
+    \begin{remark}
+        Geometrisch stelt $df$ de verandering van de functie voor langs het
+        raakvlak aan het oppervlak $z=f(x,y)$.
+    \end{remark}
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y)=x^2+y^2.
+    \]
+
+    De partiële afgeleiden zijn
+
+    \[
+        \frac{\partial f}{\partial x}=2x,
+        \qquad
+        \frac{\partial f}{\partial y}=2y.
+    \]
+
+    De totale differentiaal wordt dus
+
+    \[
+        df = 2x\,dx + 2y\,dy.
+    \]
+
+    Dit betekent dat een kleine verandering van de functie kan worden
+    benaderd door
+
+    \[
+        \Delta f \approx 2x\Delta x + 2y\Delta y.
+    \]
+
+    \subsection{Totale differentiaal van functies met meerdere variabelen}
+
+    Voor een functie van $n$ variabelen
+
+    \[
+        f(x_1,x_2,\dots,x_n)
+    \]
+
+    wordt de totale differentiaal gegeven door
+
+    \[
+        df
+        =
+        \sum_{i=1}^{n}
+        \frac{\partial f}{\partial x_i}dx_i.
+    \]
+
+    Deze formule speelt een fundamentele rol in de multivariabele analyse.
+
+    \subsection{Toepassing: benadering van functiewaarden}
+
+    De totale differentiaal kan gebruikt worden om functiewaarden te
+    benaderen.
+
+    Beschouw bijvoorbeeld
+
+    \[
+        f(x,y)=\sqrt{x^2+y^2}.
+    \]
+
+    We willen de waarde van $f(3.02,4.01)$ benaderen.
+
+    We kiezen het punt $(3,4)$, waarvoor
+
+    \[
+        f(3,4)=5.
+    \]
+
+    De partiële afgeleiden zijn
+
+    \[
+        \frac{\partial f}{\partial x}=\frac{x}{\sqrt{x^2+y^2}},
+        \qquad
+        \frac{\partial f}{\partial y}=\frac{y}{\sqrt{x^2+y^2}}.
+    \]
+
+    In het punt $(3,4)$ krijgen we
+
+    \[
+        \frac{\partial f}{\partial x}=\frac{3}{5},
+        \qquad
+        \frac{\partial f}{\partial y}=\frac{4}{5}.
+    \]
+
+    De veranderingen zijn
+
+    \[
+        dx=0.02, \qquad dy=0.01.
+    \]
+
+    Dus
+
+    \[
+        df = \frac{3}{5}(0.02) + \frac{4}{5}(0.01).
+    \]
+
+    Daaruit volgt een benadering van de functieverandering.
+
+    \subsection{Relatie met de gradient}
+
+    De totale differentiaal kan ook geschreven worden met behulp van de
+    \textit{gradientvector}:
+
+    \[
+        \nabla f =
+        \left(
+            \frac{\partial f}{\partial x},
+            \frac{\partial f}{\partial y}
+        \right).
+    \]
+
+    Dan geldt
+
+    \[
+        df = \nabla f \cdot (dx,dy).
+    \]
+
+    Hier staat $\cdot$ voor het scalaire product.
+
+    \subsection{Belang van de totale differentiaal}
+
+    De totale differentiaal speelt een centrale rol in:
+
+    \begin{itemize}
+        \item differentiaalrekening van meerdere variabelen
+        \item optimalisatieproblemen
+        \item foutanalyse en numerieke benaderingen
+        \item differentiaalvergelijkingen
+        \item natuurkundige theorieën met velden
+    \end{itemize}
+
+    In de fysica verschijnen totale differentiëlen bijvoorbeeld in
+    thermodynamica, waar grootheden zoals energie, entropie en arbeid
+    worden uitgedrukt met differentiële relaties.
+
+
+    \section{De gradiënt}
+
+    In de multivariabele analyse speelt de \textit{gradiënt} een centrale rol.
+    De gradiënt van een functie beschrijft hoe de functiewaarde verandert in de
+    ruimte en geeft zowel de richting als de grootte van de sterkste toename van
+    de functie.
+
+    \subsection{Definitie}
+
+    Beschouw een scalaire functie van drie variabelen
+
+    \[
+        f(x,y,z).
+    \]
+
+    De \textit{gradiënt} van deze functie wordt gedefinieerd als de vector
+
+    \[
+        \nabla f =
+        \left(
+            \frac{\partial f}{\partial x},
+            \frac{\partial f}{\partial y},
+            \frac{\partial f}{\partial z}
+        \right).
+    \]
+
+    De gradiënt is dus een vectorveld dat aan elk punt in de ruimte een vector
+    toekent.
+
+    \subsection{Relatie met de totale differentiaal}
+
+    De totale differentiaal van een functie kan compact geschreven worden met
+    behulp van de gradiënt.
+
+    Voor een functie $f(x,y,z)$ geldt
+
+    \[
+        df =
+        \frac{\partial f}{\partial x}dx
+        +
+        \frac{\partial f}{\partial y}dy
+        +
+        \frac{\partial f}{\partial z}dz.
+    \]
+
+    Met de gradiëntnotatie kan dit geschreven worden als
+
+    \[
+        df = \nabla f \cdot (dx,dy,dz),
+    \]
+
+    waarbij $\cdot$ het scalaire product voorstelt.
+
+    \subsection{Geometrische interpretatie}
+
+    De gradiëntvector heeft een duidelijke geometrische betekenis.
+
+    \begin{itemize}
+        \item De gradiënt wijst in de richting van de grootste toename van de functie.
+        \item De grootte van de gradiënt geeft aan hoe snel de functie in die richting
+        verandert.
+        \item De gradiënt staat loodrecht op niveauoppervlakken van de functie.
+    \end{itemize}
+
+    Als $f(x,y,z)$ een niveau-oppervlak definieert
+
+    \[
+        f(x,y,z)=c,
+    \]
+
+    dan staat $\nabla f$ loodrecht op dit oppervlak.
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y,z)=x^2+y^2+z^2.
+    \]
+
+    De partiële afgeleiden zijn
+
+    \[
+        \frac{\partial f}{\partial x}=2x,
+        \qquad
+        \frac{\partial f}{\partial y}=2y,
+        \qquad
+        \frac{\partial f}{\partial z}=2z.
+    \]
+
+    De gradiënt wordt dus
+
+    \[
+        \nabla f = (2x,2y,2z).
+    \]
+
+    Deze vector wijst radiaal naar buiten vanaf de oorsprong.
+
+    \subsection{Relatie met de richtingschafgeleide}
+
+    De richtingschafgeleide van een functie in de richting van een eenheidsvector
+    $\mathbf{u}$ wordt gegeven door
+
+    \[
+        D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}.
+    \]
+
+    Dit betekent dat de verandering van de functie in een bepaalde richting wordt
+    verkregen door het scalaire product van de gradiënt met die richting.
+
+    \subsection{De nabla-operator}
+
+    De gradiënt wordt vaak geschreven met behulp van de zogenaamde
+    \textit{nabla-operator}:
+
+    \[
+        \nabla =
+        \left(
+            \frac{\partial}{\partial x},
+            \frac{\partial}{\partial y},
+            \frac{\partial}{\partial z}
+        \right).
+    \]
+
+    Wanneer deze operator wordt toegepast op een scalaire functie $f$, krijgen we
+    de gradiënt van die functie.
+
+    \begin{remark}
+        Een uitgebreide uitleg van de nabla-operator, inclusief toepassingen in de
+        fysica (zoals de divergentie en rotatie van vectorvelden), kan gevonden worden
+        in een apart document op de website.
+    \end{remark}
+
+    \subsection{Belang van de gradiënt}
+
+    De gradiënt speelt een belangrijke rol in vele domeinen van de wiskunde en
+    natuurkunde.
+
+    \begin{itemize}
+        \item optimalisatieproblemen
+        \item differentiaalvergelijkingen
+        \item veldentheorie
+        \item elektromagnetisme
+        \item vloeistofdynamica
+    \end{itemize}
+
+    In de fysica beschrijft de gradiënt bijvoorbeeld hoe een potentiaalveld
+    verandert in de ruimte.
+
+
+    \section{Richtingsafgeleiden en maximale stijgingsrichting}
+
+    In de vorige sectie hebben we gezien dat de gradiëntvector informatie bevat
+    over de verandering van een functie in de ruimte. In deze sectie maken we
+    dit preciezer door de \textit{richtingsafgeleide} te definiëren. Deze beschrijft
+    hoe een functie verandert wanneer we ons in een specifieke richting
+    verplaatsen.
+
+    \subsection{Definitie van de richtingsafgeleide}
+
+    Beschouw een functie
+
+    \[
+        f(x,y,z)
+    \]
+
+    en een punt $\mathbf{r}_0=(x_0,y_0,z_0)$.
+
+    Laat $\mathbf{u}$ een eenheidsvector zijn die een bepaalde richting in de
+    ruimte voorstelt.
+
+    De \textit{richtingsafgeleide} van $f$ in de richting $\mathbf{u}$ wordt
+    gedefinieerd als
+
+    \[
+        D_{\mathbf{u}} f(\mathbf{r}_0)
+        =
+        \lim_{h\to 0}
+        \frac{f(\mathbf{r}_0 + h\mathbf{u}) - f(\mathbf{r}_0)}{h}.
+    \]
+
+    Hierbij bewegen we dus vanuit het punt $\mathbf{r}_0$ een kleine afstand $h$
+    in de richting $\mathbf{u}$.
+
+    \subsection{Interpretatie}
+
+    De richtingsafgeleide geeft de snelheid waarmee de functie verandert wanneer
+    we ons verplaatsen in een specifieke richting.
+
+    \begin{itemize}
+        \item een positieve waarde betekent dat de functie toeneemt
+        \item een negatieve waarde betekent dat de functie afneemt
+        \item een waarde nul betekent dat de functie lokaal constant is in die richting
+    \end{itemize}
+
+    De richtingsafgeleide is dus een generalisatie van de gewone afgeleide naar
+    willekeurige richtingen in de ruimte.
+
+    \subsection{Relatie met de gradient}
+
+    Een fundamenteel resultaat in de multivariabele analyse is dat de
+    richtingsafgeleide kan worden uitgedrukt met behulp van de gradient.
+
+    \begin{theorem}
+        Voor een differentieerbare functie $f$ geldt:
+
+        \[
+            D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u},
+        \]
+
+        waarbij $\mathbf{u}$ een eenheidsvector is.
+    \end{theorem}
+
+    \begin{proof}
+
+        Laat
+
+        \[
+            \mathbf{r} = (x,y,z)
+        \]
+
+        en
+
+        \[
+            \mathbf{u} = (u_1,u_2,u_3)
+        \]
+
+        een eenheidsvector zijn.
+
+        Wanneer we een kleine verplaatsing maken
+
+        \[
+            \mathbf{r} \rightarrow \mathbf{r}+h\mathbf{u},
+        \]
+
+        krijgen we
+
+        \[
+            f(x+hu_1,\,y+hu_2,\,z+hu_3).
+        \]
+
+        Volgens de lineaire benadering van differentieerbare functies geldt
+
+        \[
+            \Delta f
+            \approx
+            \frac{\partial f}{\partial x}hu_1
+            +
+            \frac{\partial f}{\partial y}hu_2
+            +
+            \frac{\partial f}{\partial z}hu_3.
+        \]
+
+        Dus
+
+        \[
+            \frac{\Delta f}{h}
+            \approx
+            \frac{\partial f}{\partial x}u_1
+            +
+            \frac{\partial f}{\partial y}u_2
+            +
+            \frac{\partial f}{\partial z}u_3.
+        \]
+
+        In de limiet $h\to0$ volgt
+
+        \[
+            D_{\mathbf{u}} f
+            =
+            \frac{\partial f}{\partial x}u_1
+            +
+            \frac{\partial f}{\partial y}u_2
+            +
+            \frac{\partial f}{\partial z}u_3.
+        \]
+
+        Dit is precies het scalaire product
+
+        \[
+            \nabla f \cdot \mathbf{u}.
+        \]
+
+    \end{proof}
+
+    \subsection{Maximale stijgingsrichting}
+
+    De bovenstaande formule laat ons toe een belangrijke eigenschap van de
+    gradient te begrijpen.
+
+    Omdat
+
+    \[
+        D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u},
+    \]
+
+    kunnen we schrijven
+
+    \[
+        D_{\mathbf{u}} f = |\nabla f|\,|\mathbf{u}|\,\cos\theta.
+    \]
+
+    Omdat $\mathbf{u}$ een eenheidsvector is, geldt $|\mathbf{u}|=1$ en dus
+
+    \[
+        D_{\mathbf{u}} f = |\nabla f|\cos\theta.
+    \]
+
+    De maximale waarde van deze uitdrukking ontstaat wanneer
+
+    \[
+        \cos\theta = 1.
+    \]
+
+    Dit gebeurt wanneer de richting $\mathbf{u}$ dezelfde richting heeft als
+    de gradient.
+
+    \begin{theorem}
+        De maximale stijging van een functie gebeurt in de richting van de gradient
+        $\nabla f$, en de grootte van deze maximale stijging is
+
+        \[
+            |\nabla f|.
+        \]
+    \end{theorem}
+
+    \subsection{Geometrische betekenis}
+
+    Dit resultaat heeft een duidelijke geometrische interpretatie.
+
+    \begin{itemize}
+        \item de gradient wijst in de richting van de grootste stijging
+        \item de grootte van de gradient geeft aan hoe snel de functie stijgt
+        \item de gradient staat loodrecht op niveaoppervlakken
+    \end{itemize}
+
+    Daarom wordt de gradient vaak geïnterpreteerd als een soort
+    \textit{richting van steilste helling}.
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y)=x^2+y^2.
+    \]
+
+    De gradient is
+
+    \[
+        \nabla f = (2x,2y).
+    \]
+
+    In het punt $(1,2)$ krijgen we
+
+    \[
+        \nabla f = (2,4).
+    \]
+
+    De richting van de grootste stijging is dus de richting van de vector $(2,4)$.
+
+    De grootte van de maximale stijging is
+
+    \[
+        |\nabla f| = \sqrt{2^2+4^2} = \sqrt{20}.
+    \]
+
+    \subsection{Samenvatting}
+
+    De richtingsafgeleide beschrijft hoe een functie verandert wanneer we ons
+    in een specifieke richting verplaatsen.
+
+    Voor een differentieerbare functie geldt
+
+    \[
+        D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}.
+    \]
+
+    Hieruit volgt een belangrijk resultaat:
+
+    \begin{itemize}
+        \item de gradient geeft de richting van maximale stijging
+        \item de grootte van de gradient geeft de maximale stijgingssnelheid
+    \end{itemize}
+
+    Deze concepten spelen een centrale rol in optimalisatieproblemen,
+    differentiaalvergelijkingen en vele toepassingen in de fysica.
 
 \end{document}
