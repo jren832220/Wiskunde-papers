@@ -12,6 +12,12 @@
 \usepackage[a4paper, margin=2.5cm]{geometry}
 \usepackage{microtype}
 \usepackage{hyperref}
+\usepackage{amsthm}
+
+
+\newtheorem{theorem}{Stelling}[section]
+\newtheorem{definition}[theorem]{Definitie}
+\newtheorem{remark}[theorem]{Opmerking}
 
 \title{Partiële differentiatie}
 \author{Jeroen Vermeulen}
@@ -20,6 +26,7 @@
 \begin{document}
 
     \maketitle
+    \newpage
     \tableofcontents
     \newpage
 
@@ -29,6 +36,7 @@
         Daarnaast bespreken we de belangrijke rol van partiële afgeleiden in de natuurkunde, met specifieke aandacht voor de kwantummechanica en de kwantumveldentheorie. In die laatste context werken we niet enkel met scalaire grootheden, maar ook met velden en operatoren die variëren in ruimte en tijd. Partiële afgeleiden zijn hierbij onmisbaar om de dynamica van deze grootheden en de interacties tussen verschillende kwantumvelden te doorgronden.
     \end{abstract}
 
+\newpage
 
     \section{Wat is het concept?}
 
@@ -438,5 +446,535 @@
         =
         x^3 + 4x^2y - 5.
     \]
+
+
+    \section{Bewijs van de rekenregels voor partiële afgeleiden}
+
+    In deze sectie bewijzen we de belangrijkste rekenregels voor partiële afgeleiden.
+    De meeste bewijzen verlopen volledig analoog aan die van gewone afgeleiden, met dat
+    verschil dat we telkens slechts naar \'e\'en variabele afleiden en de andere variabelen
+    constant houden.
+
+    \begin{definition}[Partiële afgeleide naar $x$]
+Zij $f(x,y)$ een functie van twee variabelen. De partiële afgeleide van $f$ naar $x$
+in het punt $(x,y)$ is gedefinieerd door
+\[
+    \frac{\partial f}{\partial x}(x,y)
+    =
+    \lim_{h \to 0}\frac{f(x+h,y)-f(x,y)}{h},
+\]
+op voorwaarde dat deze limiet bestaat.
+    \end{definition}
+
+    \begin{remark}
+        In deze definitie wordt de variabele $y$ constant gehouden. Op analoge wijze definiëren
+        we de partiële afgeleide naar $y$:
+        \[
+            \frac{\partial f}{\partial y}(x,y)
+            =
+            \lim_{k \to 0}\frac{f(x,y+k)-f(x,y)}{k}.
+        \]
+    \end{remark}
+
+    \subsection{Bewijs van de lineariteit}
+
+    \begin{theorem}[Lineariteit]
+Zij $f(x,y)$ en $g(x,y)$ twee functies waarvoor de partiële afgeleiden naar $x$ bestaan.
+Voor alle constanten $a,b \in \mathbb{R}$ geldt:
+\[
+    \frac{\partial}{\partial x}(af+bg)
+    =
+    a\frac{\partial f}{\partial x}
+    +
+    b\frac{\partial g}{\partial x}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        Volgens de definitie van de partiële afgeleide hebben we:
+        \[
+            \frac{\partial}{\partial x}(af+bg)
+            =
+            \lim_{h\to0}
+            \frac{(af+bg)(x+h,y)-(af+bg)(x,y)}{h}.
+        \]
+
+        We werken de teller uit:
+        \[
+            =
+            \lim_{h\to0}
+            \frac{
+                a f(x+h,y)+b g(x+h,y)-a f(x,y)-b g(x,y)
+            }{h}.
+        \]
+
+        We groeperen de termen:
+        \[
+            =
+            \lim_{h\to0}
+            \frac{
+                a\bigl(f(x+h,y)-f(x,y)\bigr)
+                +
+                b\bigl(g(x+h,y)-g(x,y)\bigr)
+            }{h}.
+        \]
+
+        Door de lineariteit van de limiet volgt:
+        \[
+            =
+            a \lim_{h\to0}\frac{f(x+h,y)-f(x,y)}{h}
+            +
+            b \lim_{h\to0}\frac{g(x+h,y)-g(x,y)}{h}.
+        \]
+
+        Dus:
+        \[
+            \frac{\partial}{\partial x}(af+bg)
+            =
+            a\frac{\partial f}{\partial x}
+            +
+            b\frac{\partial g}{\partial x}.
+        \]
+    \end{proof}
+
+    \subsection{Bewijs van de productregel}
+
+    \begin{theorem}[Productregel]
+Zij $f(x,y)$ en $g(x,y)$ twee functies waarvoor de partiële afgeleiden naar $x$ bestaan.
+Dan geldt:
+\[
+    \frac{\partial}{\partial x}(fg)
+    =
+    f\frac{\partial g}{\partial x}
+    +
+    g\frac{\partial f}{\partial x}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        We vertrekken opnieuw van de definitie:
+        \[
+            \frac{\partial}{\partial x}(fg)
+            =
+            \lim_{h\to0}
+            \frac{f(x+h,y)g(x+h,y)-f(x,y)g(x,y)}{h}.
+        \]
+
+        Om deze uitdrukking te herschrijven, tellen we een geschikte tussenterm op en trekken
+        we die weer af:
+        \[
+            f(x+h,y)g(x+h,y)-f(x+h,y)g(x,y)+f(x+h,y)g(x,y)-f(x,y)g(x,y).
+        \]
+
+        Daarmee wordt de teller:
+        \[
+            f(x+h,y)\bigl(g(x+h,y)-g(x,y)\bigr)
+            +
+            g(x,y)\bigl(f(x+h,y)-f(x,y)\bigr).
+        \]
+
+        Dus:
+        \[
+            \frac{\partial}{\partial x}(fg)
+            =
+            \lim_{h\to0}
+            \left[
+                f(x+h,y)\frac{g(x+h,y)-g(x,y)}{h}
+                +
+                g(x,y)\frac{f(x+h,y)-f(x,y)}{h}
+            \right].
+        \]
+
+        Als $f$ en $g$ partieel differentieerbaar zijn, dan zijn ze in het bijzonder continu
+        in de beschouwde richting, zodat
+        \[
+            \lim_{h\to0} f(x+h,y)=f(x,y).
+        \]
+
+        Daarom volgt:
+        \[
+            \frac{\partial}{\partial x}(fg)
+            =
+            f(x,y)\frac{\partial g}{\partial x}
+            +
+            g(x,y)\frac{\partial f}{\partial x}.
+        \]
+
+        Dit is precies de productregel.
+    \end{proof}
+
+    \subsection{Bewijs van de quoti\"entregel}
+
+    \begin{theorem}[Quoti\"entregel]
+Zij $f(x,y)$ en $g(x,y)$ twee functies waarvoor de partiële afgeleiden naar $x$ bestaan,
+met $g(x,y)\neq 0$. Dan geldt:
+\[
+    \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+    =
+    \frac{
+        g\frac{\partial f}{\partial x}
+        -
+        f\frac{\partial g}{\partial x}
+    }{g^2}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        We schrijven eerst:
+        \[
+            \frac{f}{g}=f\,g^{-1}.
+        \]
+
+        Toepassing van de productregel geeft:
+        \[
+            \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+            =
+            \frac{\partial f}{\partial x}g^{-1}
+            +
+            f\frac{\partial}{\partial x}(g^{-1}).
+        \]
+
+        We moeten nu de afgeleide van $g^{-1}$ bepalen. Beschouw de functie
+        \[
+            \phi(u)=u^{-1}.
+        \]
+
+        Voor $u=g(x,y)$ weten we dat
+        \[
+            \frac{\partial}{\partial x}(g^{-1})
+            =
+            -\frac{1}{g^2}\frac{\partial g}{\partial x}.
+        \]
+
+        Invullen levert:
+        \[
+            \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+            =
+            \frac{\partial f}{\partial x}\frac{1}{g}
+            -
+            f\frac{1}{g^2}\frac{\partial g}{\partial x}.
+        \]
+
+        We brengen alles op gemeenschappelijke noemer:
+        \[
+            \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+            =
+            \frac{
+                g\frac{\partial f}{\partial x}
+                -
+                f\frac{\partial g}{\partial x}
+            }{g^2}.
+        \]
+
+        Daarmee is de quoti\"entregel bewezen.
+    \end{proof}
+
+    \subsection{Bewijs van de kettingregel}
+
+    \begin{theorem}[Kettingregel]
+Zij
+\[
+    z=f(u,v),
+\]
+waarbij
+\[
+    u=u(x,y), \qquad v=v(x,y).
+\]
+Als alle betrokken afgeleiden bestaan en voldoende regelmatig zijn, dan geldt:
+\[
+    \frac{\partial z}{\partial x}
+    =
+    \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+    +
+    \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        De functie $z$ hangt van $x$ af via de tussenvariabelen $u$ en $v$. Wanneer $x$
+        een kleine verandering $\Delta x$ ondergaat, veranderen $u$ en $v$ mee:
+        \[
+            \Delta u \approx \frac{\partial u}{\partial x}\Delta x,
+            \qquad
+            \Delta v \approx \frac{\partial v}{\partial x}\Delta x.
+        \]
+
+        De verandering in $z=f(u,v)$ kan dan lineair benaderd worden door:
+        \[
+            \Delta z
+            \approx
+            \frac{\partial f}{\partial u}\Delta u
+            +
+            \frac{\partial f}{\partial v}\Delta v.
+        \]
+
+        Door de uitdrukkingen voor $\Delta u$ en $\Delta v$ in te vullen, krijgen we:
+        \[
+            \Delta z
+            \approx
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}\Delta x
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}\Delta x.
+        \]
+
+        We delen door $\Delta x$:
+        \[
+            \frac{\Delta z}{\Delta x}
+            \approx
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+        \]
+
+        In de limiet voor $\Delta x \to 0$ volgt:
+        \[
+            \frac{\partial z}{\partial x}
+            =
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+        \]
+    \end{proof}
+
+    \begin{remark}
+        Een volledig rigoureus bewijs van de kettingregel vereist een nauwkeurige behandeling
+        van resttermen. Daarom gaan we deze in het volgende hoofdstuk verder uitwerken, waarna we terugkomen op de kettingregel en een meer formeel bewijs geven.
+    \end{remark}
+
+    \subsection{Gelijkheid van gemengde partiële afgeleiden}
+
+    \begin{theorem}[Stelling van Clairaut-Schwarz]
+Zij $f(x,y)$ een functie waarvan de tweede partiële afgeleiden continu zijn in een buurt
+van een punt $(x,y)$. Dan geldt:
+\[
+    \frac{\partial^2 f}{\partial x\,\partial y}
+    =
+    \frac{\partial^2 f}{\partial y\,\partial x}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        Het volledige bewijs is technisch wat zwaarder en gebruikt de continuïteit van de tweede
+        partiële afgeleiden samen met een analyse van verschilquotiënten op een kleine rechthoek
+        in het $(x,y)$-vlak.
+
+        Het centrale idee is dat men het verschil
+        \[
+            f(x+h,y+k)-f(x+h,y)-f(x,y+k)+f(x,y)
+        \]
+        op twee verschillende manieren kan benaderen: eerst door naar $x$ en daarna naar $y$
+        te differentiëren, en vervolgens in omgekeerde volgorde. De continuïteit van de tweede
+        afgeleiden zorgt ervoor dat beide limieten samenvallen.
+
+        Daaruit volgt:
+        \[
+            \frac{\partial^2 f}{\partial x\,\partial y}
+            =
+            \frac{\partial^2 f}{\partial y\,\partial x}.
+        \]
+    \end{proof}
+
+    \subsection{Besluit}
+
+    We besluiten dat de fundamentele rekenregels voor partiële afgeleiden rechtstreeks
+    voortvloeien uit de limietdefinitie, net zoals bij gewone afgeleiden. Deze regels vormen
+    de basis voor vrijwel alle verdere toepassingen van multivariabele analyse, differentiaalvergelijkingen
+    en mathematische fysica.
+
+
+    \section{Resttermen en differentieerbaarheid}
+
+    In eerdere afleidingen, zoals bij de kettingregel, hebben we veranderingen van een
+    functie benaderd door lineaire termen. Strikt genomen verschijnen daarbij echter
+    extra termen die we \textit{resttermen} noemen. In deze sectie analyseren we deze
+    resttermen nauwkeurig.
+
+    \subsection{Lineaire benadering van een functie}
+
+    Beschouw een functie $f(x,y)$ en een punt $(x,y)$.
+    Wanneer we een kleine verandering maken
+
+    \[
+        x \to x+\Delta x, \qquad y \to y+\Delta y,
+    \]
+
+    dan verandert de functiewaarde:
+
+    \[
+        \Delta f = f(x+\Delta x,y+\Delta y)-f(x,y).
+    \]
+
+    Als de functie differentieerbaar is, kan deze verandering geschreven worden als
+
+    \[
+        \Delta f
+        =
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+        +
+        R(\Delta x,\Delta y),
+    \]
+
+    waarbij $R(\Delta x,\Delta y)$ de \textit{restterm} is.
+
+    \subsection{Eigenschap van de restterm}
+
+    De restterm heeft een belangrijke eigenschap: hij wordt veel kleiner dan de
+    lineaire termen wanneer $\Delta x$ en $\Delta y$ naar nul gaan.
+
+    Formeel betekent dit:
+
+    \[
+        \lim_{(\Delta x,\Delta y)\to(0,0)}
+        \frac{R(\Delta x,\Delta y)}
+        {\sqrt{(\Delta x)^2+(\Delta y)^2}}
+        =
+        0.
+    \]
+
+    Dit betekent dat de restterm sneller naar nul gaat dan de afstand tot het punt
+    $(x,y)$.
+
+    \begin{remark}
+        Intuïtief betekent dit dat de lineaire termen de dominante bijdrage leveren voor
+        zeer kleine veranderingen. De restterm vertegenwoordigt de fout van de lineaire
+        benadering.
+    \end{remark}
+
+    \subsection{Geometrische interpretatie}
+
+    De lineaire benadering
+
+    \[
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+    \]
+
+    beschrijft het raakvlak aan het oppervlak $z=f(x,y)$ in het punt $(x,y)$.
+    De restterm meet dus hoe sterk het werkelijke oppervlak afwijkt van dit raakvlak.
+
+    Met andere woorden:
+
+    \begin{itemize}
+        \item de lineaire termen beschrijven het raakvlak,
+        \item de restterm beschrijft de kromming van het oppervlak.
+    \end{itemize}
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y)=x^2+y^2.
+    \]
+
+    Dan is
+
+    \[
+        \frac{\partial f}{\partial x}=2x, \qquad
+        \frac{\partial f}{\partial y}=2y.
+    \]
+
+    Beschouw een kleine verandering $(\Delta x,\Delta y)$.
+    We berekenen:
+
+    \[
+        f(x+\Delta x,y+\Delta y)
+        =
+        (x+\Delta x)^2+(y+\Delta y)^2.
+    \]
+
+    Uitwerken geeft:
+
+    \[
+        =
+        x^2+y^2+2x\Delta x+2y\Delta y+(\Delta x)^2+(\Delta y)^2.
+    \]
+
+    Dus
+
+    \[
+        \Delta f
+        =
+        2x\Delta x+2y\Delta y
+        +
+        (\Delta x)^2+(\Delta y)^2.
+    \]
+
+    Hier zien we duidelijk de structuur:
+
+    \[
+        \Delta f
+        =
+        \underbrace{2x\Delta x+2y\Delta y}_{\text{lineaire termen}}
+        +
+        \underbrace{(\Delta x)^2+(\Delta y)^2}_{\text{restterm}}.
+    \]
+
+    De restterm bestaat hier uit termen van tweede orde.
+
+    \subsection{Resttermen en Taylorontwikkeling}
+
+    Resttermen verschijnen ook in de Taylorontwikkeling van functies.
+    Voor een functie van twee variabelen krijgen we bijvoorbeeld:
+
+    \[
+        f(x+\Delta x,y+\Delta y)
+        =
+        f(x,y)
+        +
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+        +
+        R(\Delta x,\Delta y).
+    \]
+
+    Wanneer we hogere orde termen toevoegen, kunnen we de restterm steeds kleiner
+    maken.
+
+    \subsection{Waarom resttermen belangrijk zijn}
+
+    Resttermen spelen een cruciale rol in de analyse omdat ze toelaten om:
+
+    \begin{itemize}
+        \item de nauwkeurigheid van lineaire benaderingen te begrijpen,
+        \item rigoureuze bewijzen van rekenregels te geven,
+        \item de kettingregel en productregel correct te bewijzen,
+        \item Taylorontwikkelingen te formuleren.
+    \end{itemize}
+
+    Zonder controle over resttermen zouden veel afleidingen in de differentiaalrekening
+    slechts heuristisch zijn.
+
+    \subsection{Samenvatting}
+
+    Voor een differentieerbare functie $f(x,y)$ kan een kleine verandering geschreven
+    worden als
+
+    \[
+        \Delta f
+        =
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+        +
+        R(\Delta x,\Delta y),
+    \]
+
+    waarbij de restterm voldoet aan
+
+    \[
+        \frac{R(\Delta x,\Delta y)}
+        {\sqrt{(\Delta x)^2+(\Delta y)^2}}
+        \to 0
+        \quad \text{als} \quad
+        (\Delta x,\Delta y)\to(0,0).
+    \]
+
+    De restterm beschrijft dus het verschil tussen de werkelijke functieverandering
+    en de lineaire benadering.
 
 \end{document}
