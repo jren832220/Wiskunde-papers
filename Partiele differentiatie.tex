@@ -1,0 +1,442 @@
+\documentclass[11pt,a4paper]{article}
+
+% Taal en encodering
+\usepackage[dutch]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Wiskunde
+\usepackage{amsmath, amssymb}
+
+% Opmaak
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\title{Partiële differentiatie}
+\author{Jeroen Vermeulen}
+\date{}
+
+\begin{document}
+
+    \maketitle
+    \tableofcontents
+    \newpage
+
+    \begin{abstract}
+        Dit document behandelt de basisprincipes van partiële differentiatie, waarbij we dieper ingaan op de definitie, de gangbare notatie en de belangrijkste eigenschappen. Aan de hand van diverse voorbeelden verduidelijken we hoe dit fundamentele wiskundige gereedschap essentieel is voor het analyseren van functies met meerdere variabelen.
+
+        Daarnaast bespreken we de belangrijke rol van partiële afgeleiden in de natuurkunde, met specifieke aandacht voor de kwantummechanica en de kwantumveldentheorie. In die laatste context werken we niet enkel met scalaire grootheden, maar ook met velden en operatoren die variëren in ruimte en tijd. Partiële afgeleiden zijn hierbij onmisbaar om de dynamica van deze grootheden en de interacties tussen verschillende kwantumvelden te doorgronden.
+    \end{abstract}
+
+
+    \section{Wat is het concept?}
+
+    Bij een gewone afgeleide beschouwen we een functie \( f(x) \) die afhangt van één variabele \( x \). De afgeleide \( f'(x) \) geeft aan hoe snel de functie verandert wanneer \( x \) een kleine verandering ondergaat.
+
+    Bij partiële differentiatie hebben we te maken met functies van meerdere variabelen, bijvoorbeeld \( f(x,y) \). De partiële afgeleide van \( f \) ten opzichte van \( x \), genoteerd als
+    \[
+        \frac{\partial f}{\partial x},
+    \]
+    geeft aan hoe snel de functie verandert wanneer alleen \( x \) verandert, terwijl \( y \) constant gehouden wordt.
+
+    Op analoge wijze geeft de partiële afgeleide van \( f \) ten opzichte van \( y \), genoteerd als
+    \[
+        \frac{\partial f}{\partial y},
+    \]
+    aan hoe snel de functie verandert wanneer alleen \( y \) verandert, terwijl \( x \) constant blijft.
+
+
+    \section{Voorbeeld}
+
+    Beschouw de functie
+    \[
+        f(x,y) = x^2y + 3xy^2.
+    \]
+
+    Dan is de partiële afgeleide naar \( x \):
+    \[
+        \frac{\partial f}{\partial x} = 2xy + 3y^2,
+    \]
+    omdat we \( y \) als constante beschouwen.
+
+    De partiële afgeleide naar \( y \) is:
+    \[
+        \frac{\partial f}{\partial y} = x^2 + 6xy,
+    \]
+    omdat we nu \( x \) als constante behandelen.
+
+
+    \section{Waarom is dit belangrijk?}
+
+    Partiële afgeleiden spelen een fundamentele rol in de wiskunde, fysica, ingenieurswetenschappen en economie. Ze worden gebruikt om veranderingen in systemen met meerdere variabelen te beschrijven. In de fysica verschijnen ze bijvoorbeeld in:
+
+    \begin{itemize}
+        \item de warmteleidingsvergelijking,
+        \item de golfvergelijking,
+        \item de Maxwellvergelijkingen,
+        \item de Schrödingervergelijking,
+        \item en in de kwantumveldentheorie.
+    \end{itemize}
+
+    Wanneer fysische grootheden afhangen van plaats en tijd, zoals \( \phi(x,y,z,t) \), zijn partiële afgeleiden noodzakelijk om te beschrijven hoe deze grootheden evolueren.
+
+
+    \section{Rekenregels voor partiële afgeleiden}
+
+    Bij partiële afgeleiden gelden vrijwel dezelfde basisregels als bij gewone afgeleiden.
+    Het grote verschil is dat we telkens afleiden naar \'{e}\'en variabele, terwijl we de
+    andere variabelen als constant beschouwen.
+
+    Beschouw twee differentieerbare functies $f(x,y)$ en $g(x,y)$, en twee constanten
+    $a,b \in \mathbb{R}$.
+
+    \subsection{Lineariteit}
+
+    De partiële afgeleide is lineair. Dat betekent dat:
+
+    \[
+        \frac{\partial}{\partial x}\bigl(af(x,y) + bg(x,y)\bigr)
+        =
+        a \frac{\partial f}{\partial x}
+        +
+        b \frac{\partial g}{\partial x}
+    \]
+
+    en analoog:
+
+    \[
+        \frac{\partial}{\partial y}\bigl(af(x,y) + bg(x,y)\bigr)
+        =
+        a \frac{\partial f}{\partial y}
+        +
+        b \frac{\partial g}{\partial y}
+    \]
+
+    \paragraph{Voorbeeld.}
+    Neem
+    \[
+        f(x,y) = x^2y, \qquad g(x,y) = 3xy^2.
+    \]
+
+    Dan is
+    \[
+        \frac{\partial}{\partial x}(f+g)
+        =
+        \frac{\partial}{\partial x}(x^2y + 3xy^2)
+        =
+        2xy + 3y^2.
+    \]
+
+    \subsection{Productregel}
+
+    Voor het product van twee functies geldt:
+
+    \[
+        \frac{\partial}{\partial x}(fg)
+        =
+        f \frac{\partial g}{\partial x}
+        +
+        g \frac{\partial f}{\partial x}
+    \]
+
+    en evenzo voor afleiding naar $y$:
+
+    \[
+        \frac{\partial}{\partial y}(fg)
+        =
+        f \frac{\partial g}{\partial y}
+        +
+        g \frac{\partial f}{\partial y}
+    \]
+
+    \paragraph{Voorbeeld.}
+    Neem
+    \[
+        f(x,y)=x^2+y
+        \qquad \text{en} \qquad
+        g(x,y)=xy.
+    \]
+
+    Dan is
+    \[
+        \frac{\partial f}{\partial x} = 2x,
+        \qquad
+        \frac{\partial g}{\partial x} = y.
+    \]
+
+    Dus:
+
+    \[
+        \frac{\partial}{\partial x}\bigl((x^2+y)(xy)\bigr)
+        =
+        (x^2+y)\,y + (xy)\,2x.
+    \]
+
+    Uitwerken geeft:
+
+    \[
+        \frac{\partial}{\partial x}\bigl((x^2+y)(xy)\bigr)
+        =
+        x^2y + y^2 + 2x^2y
+        =
+        3x^2y + y^2.
+    \]
+
+    \subsection{Quoti\"entregel}
+
+    Voor een quoti\"ent van twee functies geldt, zolang $g(x,y)\neq 0$:
+
+    \[
+        \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+        =
+        \frac{
+            g\frac{\partial f}{\partial x}
+            -
+            f\frac{\partial g}{\partial x}
+        }{g^2}
+    \]
+
+    Op dezelfde manier:
+
+    \[
+        \frac{\partial}{\partial y}\left(\frac{f}{g}\right)
+        =
+        \frac{
+            g\frac{\partial f}{\partial y}
+            -
+            f\frac{\partial g}{\partial y}
+        }{g^2}
+    \]
+
+    \paragraph{Voorbeeld.}
+    Beschouw
+    \[
+        h(x,y)=\frac{x^2+y}{x+y}.
+    \]
+
+    Dan is
+
+    \[
+        \frac{\partial}{\partial x}(x^2+y)=2x,
+        \qquad
+        \frac{\partial}{\partial x}(x+y)=1.
+    \]
+
+    Dus:
+
+    \[
+        \frac{\partial h}{\partial x}
+        =
+        \frac{(x+y)\cdot 2x - (x^2+y)\cdot 1}{(x+y)^2}.
+    \]
+
+    \subsection{Kettingregel}
+
+    De kettingregel gebruiken we wanneer een functie afhangt van variabelen die zelf
+    weer afhangen van andere variabelen.
+
+    Stel:
+
+    \[
+        z=f(u,v),
+    \]
+
+    waarbij
+
+    \[
+        u=u(x,y),
+        \qquad
+        v=v(x,y).
+    \]
+
+    Dan geldt:
+
+    \[
+        \frac{\partial z}{\partial x}
+        =
+        \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+        +
+        \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}
+    \]
+
+    en analoog:
+
+    \[
+        \frac{\partial z}{\partial y}
+        =
+        \frac{\partial f}{\partial u}\frac{\partial u}{\partial y}
+        +
+        \frac{\partial f}{\partial v}\frac{\partial v}{\partial y}.
+    \]
+
+    \paragraph{Voorbeeld.}
+    Neem
+    \[
+        z=u^2+v^2,
+        \qquad
+        u=x+y,
+        \qquad
+        v=xy.
+    \]
+
+    Dan is
+
+    \[
+        \frac{\partial z}{\partial u}=2u,
+        \qquad
+        \frac{\partial z}{\partial v}=2v,
+        \qquad
+        \frac{\partial u}{\partial x}=1,
+        \qquad
+        \frac{\partial v}{\partial x}=y.
+    \]
+
+    Dus:
+
+    \[
+        \frac{\partial z}{\partial x}
+        =
+        2u\cdot 1 + 2v\cdot y.
+    \]
+
+    Omdat $u=x+y$ en $v=xy$, volgt:
+
+    \[
+        \frac{\partial z}{\partial x}
+        =
+        2(x+y)+2xy^2.
+    \]
+
+    \subsection{Gemengde partiële afgeleiden}
+
+    Wanneer een functie voldoende glad is, mogen we de volgorde van differentiëren verwisselen.
+    Met ``voldoende glad'' bedoelen we hier dat de tweede partiële afgeleiden bestaan en continu zijn in een omgeving van het beschouwde punt.
+
+    Dat betekent:
+
+    \[
+        \frac{\partial^2 f}{\partial x \partial y}
+        =
+        \frac{\partial^2 f}{\partial y \partial x}.
+    \]
+
+    Dit resultaat staat bekend als de \textit{stelling van Clairaut} of de
+    \textit{stelling van Schwarz}.
+
+    \paragraph{Voorbeeld.}
+    Neem
+    \[
+        f(x,y)=x^2y^3.
+    \]
+
+    Eerst differentiëren we naar $x$:
+
+    \[
+        \frac{\partial f}{\partial x}=2xy^3.
+    \]
+
+    Daarna naar $y$:
+
+    \[
+        \frac{\partial^2 f}{\partial y \partial x}
+        =
+        \frac{\partial}{\partial y}(2xy^3)
+        =
+        6xy^2.
+    \]
+
+    Omgekeerd:
+
+    \[
+        \frac{\partial f}{\partial y}=3x^2y^2,
+    \]
+
+    en dan naar $x$:
+
+    \[
+        \frac{\partial^2 f}{\partial x \partial y}
+        =
+        \frac{\partial}{\partial x}(3x^2y^2)
+        =
+        6xy^2.
+    \]
+
+    Beide resultaten zijn gelijk.
+
+    \subsection{Samenvatting van de rekenregels}
+
+    Voor partiële afgeleiden gelden dus de volgende basisregels:
+
+    \[
+        \frac{\partial}{\partial x}(af+bg)
+        =
+        a\frac{\partial f}{\partial x}
+        +
+        b\frac{\partial g}{\partial x}
+    \]
+
+    \[
+        \frac{\partial}{\partial x}(fg)
+        =
+        f\frac{\partial g}{\partial x}
+        +
+        g\frac{\partial f}{\partial x}
+    \]
+
+    \[
+        \frac{\partial}{\partial x}\left(\frac{f}{g}\right)
+        =
+        \frac{
+            g\frac{\partial f}{\partial x}
+            -
+            f\frac{\partial g}{\partial x}
+        }{g^2}
+        \qquad (g\neq 0)
+    \]
+
+    \[
+        \frac{\partial z}{\partial x}
+        =
+        \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+        +
+        \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}
+    \]
+
+    \[
+        \frac{\partial^2 f}{\partial x \partial y}
+        =
+        \frac{\partial^2 f}{\partial y \partial x}
+    \]
+
+    \subsection{Oefening}
+
+    Bereken de partiële afgeleiden naar $x$ en naar $y$ van de functie
+
+    \[
+        f(x,y)=x^3y + 2x^2y^2 - 5y.
+    \]
+
+    \subsection{Oplossing van de oefening}
+
+    Voor de partiële afgeleide naar $x$ beschouwen we $y$ als constante:
+
+    \[
+        \frac{\partial f}{\partial x}
+        =
+        \frac{\partial}{\partial x}(x^3y + 2x^2y^2 - 5y)
+        =
+        3x^2y + 4xy^2.
+    \]
+
+    Voor de partiële afgeleide naar $y$ beschouwen we $x$ als constante:
+
+    \[
+        \frac{\partial f}{\partial y}
+        =
+        \frac{\partial}{\partial y}(x^3y + 2x^2y^2 - 5y)
+        =
+        x^3 + 4x^2y - 5.
+    \]
+
+\end{document}
