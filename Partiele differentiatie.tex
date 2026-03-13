@@ -13,6 +13,7 @@
 \usepackage{microtype}
 \usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage{tikz}
 
 
 \newtheorem{theorem}{Stelling}[section]
@@ -916,6 +917,42 @@ van een punt $(x,y)$. Dan geldt:
 
     De restterm bestaat hier uit termen van tweede orde.
 
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[scale=0.95]
+            % Doorsnede in de x-richting
+            \begin{scope}[shift={(0,0)}]
+                \draw[->] (-0.3,0) -- (4.4,0) node[right] {$x$};
+                \draw[->] (0,-0.3) -- (0,3.4) node[above] {$z$};
+                \draw[thick,domain=0.5:4,smooth] plot (\x,{0.16*(\x-1.8)*(\x-1.8)+1.1});
+                \draw[blue,thick] (0.5,1.58) -- (4,2.42);
+                \fill (2,1.1) circle (1.6pt) node[below right] {$P$};
+                \node at (2,-0.55) {Doorsnede met $y$ constant};
+                \node[blue] at (3.2,2.75) {raaklijn in $x$-richting};
+            \end{scope}
+
+            % Doorsnede in de y-richting
+            \begin{scope}[shift={(6.4,0)}]
+                \draw[->] (-0.3,0) -- (4.4,0) node[right] {$y$};
+                \draw[->] (0,-0.3) -- (0,3.4) node[above] {$z$};
+                \draw[thick,domain=0.5:4,smooth] plot (\x,{0.13*(\x-2.2)*(\x-2.2)+1.0});
+                \draw[blue,thick] (0.5,1.85) -- (4,1.15);
+                \fill (2.2,1.0) circle (1.6pt) node[below right] {$P$};
+                \node at (2,-0.55) {Doorsnede met $x$ constant};
+                \node[blue] at (2.5,2.75) {raaklijn in $y$-richting};
+            \end{scope}
+
+            % Samenvattende koppeling naar het raakvlak
+            \draw[->] (4.55,1.95) -- (5.65,2.45);
+            \draw[->] (6.25,1.95) -- (5.85,2.45);
+            \node[draw,rounded corners,align=center,fill=gray!10] at (5.2,3.2)
+                {Samen bepalen deze raaklijnen lokaal het \textbf{raakvlak}\\
+            en dus de lineaire benadering $\Delta f \approx df$.};
+        \end{tikzpicture}
+        \caption{Twee doorsneden van het oppervlak $z=f(x,y)$ door hetzelfde punt $P$. De raaklijn in de $x$-richting en de raaklijn in de $y$-richting vatten samen het lokale raakvlak samen, dat de lineaire termen van $\Delta f$ beschrijft.}
+        \label{fig:raaklijnen-raakvlak}
+    \end{figure}
+
     \subsection{Resttermen en Taylorontwikkeling}
 
     Resttermen verschijnen ook in de Taylorontwikkeling van functies.
@@ -1559,5 +1596,645 @@ van een punt $(x,y)$. Dan geldt:
 
     Deze concepten spelen een centrale rol in optimalisatieproblemen,
     differentiaalvergelijkingen en vele toepassingen in de fysica.
+
+
+    \section{Een terugblik op de kettingregel}
+
+    Nu we de resttermen en de totale differentiaal hebben besproken, kunnen we
+    terugkomen op de kettingregel en een meer rigoureus bewijs geven. Het grote
+    verschil met de eerdere, meer intuïtieve afleiding is dat we nu expliciet
+    rekening houden met de resttermen die optreden in de lineaire benaderingen.
+
+    \begin{theorem}[Kettingregel, rigoureus bewijs]
+Zij
+\[
+    z=f(u,v),
+\]
+waarbij
+\[
+    u=u(x,y), \qquad v=v(x,y).
+\]
+Veronderstel dat $u$ en $v$ differentieerbaar zijn als functies van $(x,y)$
+en dat $f$ differentieerbaar is als functie van $(u,v)$.
+Dan geldt:
+\[
+    \frac{\partial z}{\partial x}
+    =
+    \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+    +
+    \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+\]
+    \end{theorem}
+
+    \begin{proof}
+        We willen de partiële afgeleide van $z=f(u(x,y),v(x,y))$ naar $x$ bepalen.
+        Daarvoor bekijken we een kleine verandering in $x$, terwijl $y$ constant
+        gehouden wordt.
+
+        \subsection*{Stap 1: verandering van $u$ en $v$ bij een verandering van $x$}
+
+        Beschouw een kleine toename $h$ van $x$. Dan gaat
+        \[
+            x \to x+h,
+        \]
+        terwijl $y$ onveranderd blijft.
+
+        Daardoor veranderen ook $u$ en $v$. We noteren:
+        \[
+            \Delta u = u(x+h,y)-u(x,y),
+            \qquad
+            \Delta v = v(x+h,y)-v(x,y).
+        \]
+
+        Omdat $u$ en $v$ differentieerbaar zijn, mogen we hun verandering schrijven
+        als een lineair deel plus een restterm. Omdat alleen $x$ verandert, krijgen we:
+
+        \[
+            \Delta u
+            =
+            \frac{\partial u}{\partial x}h + r_u(h),
+        \]
+        \[
+            \Delta v
+            =
+            \frac{\partial v}{\partial x}h + r_v(h),
+        \]
+
+        waarbij de resttermen voldoen aan
+        \[
+            \lim_{h\to0}\frac{r_u(h)}{h}=0,
+            \qquad
+            \lim_{h\to0}\frac{r_v(h)}{h}=0.
+        \]
+
+        Met andere woorden:
+        \[
+            r_u(h)=o(h),
+            \qquad
+            r_v(h)=o(h).
+        \]
+
+        \subsection*{Stap 2: verandering van $z=f(u,v)$}
+
+        Nu bekijken we de verandering van $z$ die veroorzaakt wordt door de veranderingen
+        $\Delta u$ en $\Delta v$.
+
+        We hebben:
+        \[
+            \Delta z
+            =
+            f(u+\Delta u,\,v+\Delta v)-f(u,v).
+        \]
+
+        Omdat $f$ differentieerbaar is als functie van $(u,v)$, kunnen we ook hier een
+        lineaire benadering met restterm gebruiken:
+
+        \[
+            \Delta z
+            =
+            \frac{\partial f}{\partial u}\Delta u
+            +
+            \frac{\partial f}{\partial v}\Delta v
+            +
+            r_f(\Delta u,\Delta v),
+        \]
+
+        waarbij de restterm $r_f(\Delta u,\Delta v)$ voldoet aan
+
+        \[
+            \lim_{(\Delta u,\Delta v)\to(0,0)}
+            \frac{r_f(\Delta u,\Delta v)}
+            {\sqrt{(\Delta u)^2+(\Delta v)^2}}
+            =0.
+        \]
+
+        Dit betekent dat
+        \[
+            r_f(\Delta u,\Delta v)=o\!\left(\sqrt{(\Delta u)^2+(\Delta v)^2}\right).
+        \]
+
+        \subsection*{Stap 3: invullen van de ontwikkelingen van $\Delta u$ en $\Delta v$}
+
+        We vullen nu de uitdrukkingen voor $\Delta u$ en $\Delta v$ in:
+
+        \[
+            \Delta z
+            =
+            \frac{\partial f}{\partial u}
+            \left(
+                \frac{\partial u}{\partial x}h + r_u(h)
+            \right)
+            +
+            \frac{\partial f}{\partial v}
+            \left(
+                \frac{\partial v}{\partial x}h + r_v(h)
+            \right)
+            +
+            r_f(\Delta u,\Delta v).
+        \]
+
+        Uitwerken geeft:
+
+        \[
+            \Delta z
+            =
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}h
+            +
+            \frac{\partial f}{\partial u}r_u(h)
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}h
+            +
+            \frac{\partial f}{\partial v}r_v(h)
+            +
+            r_f(\Delta u,\Delta v).
+        \]
+
+        We groeperen de termen waarin $h$ expliciet voorkomt:
+
+        \[
+            \Delta z
+            =
+            \left(
+                \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+                +
+                \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}
+            \right)h
+            +
+            \frac{\partial f}{\partial u}r_u(h)
+            +
+            \frac{\partial f}{\partial v}r_v(h)
+            +
+            r_f(\Delta u,\Delta v).
+        \]
+
+        \subsection*{Stap 4: delen door $h$}
+
+        Om de partiële afgeleide naar $x$ te vinden, delen we door $h$:
+
+        \[
+            \frac{\Delta z}{h}
+            =
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}
+            +
+            \frac{\partial f}{\partial u}\frac{r_u(h)}{h}
+            +
+            \frac{\partial f}{\partial v}\frac{r_v(h)}{h}
+            +
+            \frac{r_f(\Delta u,\Delta v)}{h}.
+        \]
+
+        We willen nu de limiet nemen voor $h\to0$.
+
+        De eerste twee termen blijven gewoon staan. Voor de derde en vierde term geldt,
+        omdat $r_u(h)=o(h)$ en $r_v(h)=o(h)$:
+
+        \[
+            \lim_{h\to0}\frac{r_u(h)}{h}=0,
+            \qquad
+            \lim_{h\to0}\frac{r_v(h)}{h}=0.
+        \]
+
+        Dus:
+
+        \[
+            \lim_{h\to0}
+            \frac{\partial f}{\partial u}\frac{r_u(h)}{h}
+            =0,
+            \qquad
+            \lim_{h\to0}
+            \frac{\partial f}{\partial v}\frac{r_v(h)}{h}
+            =0.
+        \]
+
+        \subsection*{Stap 5: controle van de laatste restterm}
+
+        Nu moeten we nog aantonen dat
+        \[
+            \frac{r_f(\Delta u,\Delta v)}{h}\to0
+            \qquad \text{voor } h\to0.
+        \]
+
+        Omdat $u$ en $v$ differentieerbaar zijn, zijn zij in het bijzonder continu,
+        en bovendien geldt uit hun lineaire ontwikkeling dat $\Delta u \to 0$ en
+        $\Delta v \to 0$ als $h\to 0$.
+
+        Verder geldt:
+        \[
+            r_f(\Delta u,\Delta v)
+            =
+            o\!\left(\sqrt{(\Delta u)^2+(\Delta v)^2}\right).
+        \]
+
+        Dus kunnen we schrijven:
+        \[
+            r_f(\Delta u,\Delta v)
+            =
+            \varepsilon(h)\,\sqrt{(\Delta u)^2+(\Delta v)^2},
+        \]
+        waarbij $\varepsilon(h)\to0$ voor $h\to0$.
+
+        Daarom is
+        \[
+            \frac{r_f(\Delta u,\Delta v)}{h}
+            =
+            \varepsilon(h)\,
+            \frac{\sqrt{(\Delta u)^2+(\Delta v)^2}}{h}.
+        \]
+
+        We onderzoeken nu de factor
+        \[
+            \frac{\sqrt{(\Delta u)^2+(\Delta v)^2}}{h}.
+        \]
+
+        Omdat
+        \[
+            \Delta u = \frac{\partial u}{\partial x}h + r_u(h),
+            \qquad
+            \Delta v = \frac{\partial v}{\partial x}h + r_v(h),
+        \]
+        volgt dat zowel $\Delta u$ als $\Delta v$ van orde $h$ zijn. Meer precies:
+        \[
+            \Delta u = O(h),
+            \qquad
+            \Delta v = O(h).
+        \]
+
+        Daaruit volgt
+        \[
+            \sqrt{(\Delta u)^2+(\Delta v)^2}=O(h).
+        \]
+
+        Dus bestaat er een constante $C>0$ zodat voor $h$ voldoende klein:
+        \[
+            \sqrt{(\Delta u)^2+(\Delta v)^2} \leq Ch.
+        \]
+
+        Hieruit volgt:
+        \[
+            \left|
+                \frac{r_f(\Delta u,\Delta v)}{h}
+            \right|
+            =
+            |\varepsilon(h)|
+            \frac{\sqrt{(\Delta u)^2+(\Delta v)^2}}{h}
+            \leq
+            C|\varepsilon(h)|.
+        \]
+
+        Omdat $\varepsilon(h)\to0$, volgt nu:
+        \[
+            \frac{r_f(\Delta u,\Delta v)}{h}\to0.
+        \]
+
+        \subsection*{Stap 6: nemen van de limiet}
+
+        We nemen nu de limiet van de volledige uitdrukking:
+
+        \[
+            \lim_{h\to0}\frac{\Delta z}{h}
+            =
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+        \]
+
+        Maar per definitie is
+        \[
+            \frac{\partial z}{\partial x}
+            =
+            \lim_{h\to0}\frac{z(x+h,y)-z(x,y)}{h}
+            =
+            \lim_{h\to0}\frac{\Delta z}{h}.
+        \]
+
+        Dus besluiten we:
+
+        \[
+            \frac{\partial z}{\partial x}
+            =
+            \frac{\partial f}{\partial u}\frac{\partial u}{\partial x}
+            +
+            \frac{\partial f}{\partial v}\frac{\partial v}{\partial x}.
+        \]
+
+        Dit bewijst de kettingregel.
+    \end{proof}
+
+
+    \section{Richtingsvectoren en niveauverzamelingen}
+
+    In de multivariabele analyse is het vaak nuttig om functies niet enkel te bekijken
+    als formules, maar ook als geometrische objecten. Een functie van meerdere variabelen
+    kan bijvoorbeeld oppervlakken of hogere-dimensionale structuren beschrijven.
+    Twee belangrijke concepten die hierbij helpen zijn richtingsvectoren en
+    niveauverzamelingen.
+
+    Deze concepten zijn nauw verbonden met de gradiënt en spelen een centrale rol
+    in geometrische interpretaties van differentiaalrekening, optimalisatie en
+    veldentheorie in de fysica.
+
+    \subsection{Richtingsvectoren}
+
+    Een richtingsvector beschrijft een bepaalde richting in de ruimte.
+
+    In het vlak $\mathbb{R}^2$ schrijven we een vector bijvoorbeeld als
+
+    \[
+        \mathbf{v} = (v_1, v_2).
+    \]
+
+    In de driedimensionale ruimte $\mathbb{R}^3$ schrijven we
+
+    \[
+        \mathbf{v} = (v_1, v_2, v_3).
+    \]
+
+    De lengte van een vector wordt gegeven door de Euclidische norm:
+
+    \[
+        |\mathbf{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}.
+    \]
+
+    Vaak gebruiken we een \textit{eenheidsvector} om een richting te beschrijven.
+    Dit is een vector met lengte $1$:
+
+    \[
+        \mathbf{u} = \frac{\mathbf{v}}{|\mathbf{v}|}.
+    \]
+
+    Eenheidsvectoren zijn bijzonder nuttig omdat zij enkel de richting
+    van een beweging beschrijven en niet de grootte.
+
+    \subsection{Beweging in een gegeven richting}
+
+    Beschouw een punt
+
+    \[
+        \mathbf{r}_0 = (x_0, y_0, z_0)
+    \]
+
+    en een richting gegeven door een eenheidsvector $\mathbf{u}$.
+
+    Wanneer we ons een kleine afstand $h$ verplaatsen in deze richting,
+    komen we in het punt
+
+    \[
+        \mathbf{r}(h) = \mathbf{r}_0 + h\mathbf{u}.
+    \]
+
+    In coördinaten wordt dit
+
+    \[
+        (x_0 + hu_1,\, y_0 + hu_2,\, z_0 + hu_3).
+    \]
+
+    Dit idee vormt de basis voor het definiëren van richtingsafgeleiden,
+    die beschrijven hoe een functie verandert wanneer we ons in een
+    specifieke richting verplaatsen.
+
+    \subsection{Niveauverzamelingen}
+
+    Beschouw een functie
+
+    \[
+        f : \mathbb{R}^n \rightarrow \mathbb{R}.
+    \]
+
+    Voor een constante waarde $c$ definiëren we de \textit{niveauverzameling}
+
+    \[
+        f(x_1, x_2, \ldots, x_n) = c.
+    \]
+
+    Dit is de verzameling van alle punten waarvoor de functie dezelfde waarde
+    $c$ aanneemt.
+
+    \subsection{Niveaucurven}
+
+    Wanneer we een functie van twee variabelen beschouwen
+
+    \[
+        f(x,y),
+    \]
+
+    dan worden de niveauverzamelingen gegeven door
+
+    \[
+        f(x,y) = c.
+    \]
+
+    Deze verzamelingen zijn in het algemeen \textit{curven} in het vlak en worden
+    \textit{niveaucurven} of \textit{contourlijnen} genoemd.
+
+    Voorbeeld:
+
+    Beschouw de functie
+
+    \[
+        f(x,y) = x^2 + y^2.
+    \]
+
+    De niveaucurven worden bepaald door
+
+    \[
+        x^2 + y^2 = c.
+    \]
+
+    Dit zijn cirkels met straal $\sqrt{c}$ en middelpunt in de oorsprong.
+
+    Elke waarde van $c$ geeft dus een andere cirkel.
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[scale=0.95]
+            \draw[->] (-3.7,0) -- (3.9,0) node[right] {$x$};
+            \draw[->] (0,-3.7) -- (0,3.9) node[above] {$y$};
+
+            % Niveaucurven f(x,y)=x^2+y^2=c
+            \draw[thick] (0,0) circle (1.0);
+            \draw[thick] (0,0) circle (1.8);
+            \draw[thick] (0,0) circle (2.7);
+            \node at (1.15,1.35) {$c_1$};
+            \node at (2.0,1.9) {$c_2$};
+            \node at (2.9,2.2) {$c_3$};
+
+            % Punt op een niveaucurve met gradientvector
+            \fill (1.27,1.27) circle (1.4pt) node[above right] {$P$};
+            \draw[blue,thick,->] (1.27,1.27) -- (2.05,2.05) node[above right] {$\nabla f(P)$};
+            \node[align=center] at (0,-3.1) {Concentrische niveaucurven van $f(x,y)=x^2+y^2$;\\
+            de gradi\"ent wijst radiaal naar buiten.};
+        \end{tikzpicture}
+        \caption{Niveaucurven van $f(x,y)=x^2+y^2$: voor verschillende waarden van $c$ krijgen we concentrische cirkels.}
+        \label{fig:niveaucurven-cirkels}
+    \end{figure}
+
+    Niveaucurven worden veel gebruikt in:
+
+    \begin{itemize}
+        \item topografische kaarten (hoogtelijnen)
+        \item meteorologie (druklijnen)
+        \item optimalisatieproblemen
+        \item fysische potentiaalvelden
+    \end{itemize}
+
+    \subsection{Niveauoppervlakken}
+
+    Voor een functie van drie variabelen
+
+    \[
+        f(x,y,z)
+    \]
+
+    wordt de niveauverzameling gegeven door
+
+    \[
+        f(x,y,z) = c.
+    \]
+
+    In dit geval krijgen we meestal een oppervlak in de ruimte.
+    Dit noemen we een \textit{niveauoppervlak}.
+
+    Voorbeeld:
+
+    Beschouw
+
+    \[
+        f(x,y,z) = x^2 + y^2 + z^2.
+    \]
+
+    Dan krijgen we
+
+    \[
+        x^2 + y^2 + z^2 = c.
+    \]
+
+    Dit beschrijft een bol met straal $\sqrt{c}$.
+
+    \subsection{Relatie met de gradiënt}
+
+    Een fundamenteel resultaat in de multivariabele analyse is dat
+    de gradiëntvector loodrecht staat op niveauverzamelingen.
+
+    Beschouw een differentieerbare functie $f(x,y)$ en een niveaucurve
+
+    \[
+        f(x,y) = c.
+    \]
+
+    Stel dat we langs deze curve bewegen. Dan verandert de functiewaarde
+    niet, omdat ze constant gelijk blijft aan $c$.
+
+    Daarom geldt voor een kleine verplaatsing $(dx,dy)$ langs de curve:
+
+    \[
+        df = 0.
+    \]
+
+    Maar we weten dat
+
+    \[
+        df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy.
+    \]
+
+    Dus
+
+    \[
+        \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy = 0.
+    \]
+
+    In vectornotatie wordt dit
+
+    \[
+        \nabla f \cdot (dx,dy) = 0.
+    \]
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \draw[->] (-3.3,0) -- (3.5,0) node[right] {$x$};
+            \draw[->] (0,-2.4) -- (0,3.2) node[above] {$y$};
+
+            % Een niveaucurve met raakvector en normale (gradient)
+            \draw[thick,domain=-2.5:2.5,smooth] plot (\x,{0.32*\x*\x+0.4});
+            \fill (1.4,1.03) circle (1.5pt) node[above right] {$P$};
+            \draw[red,thick,->] (1.4,1.03) -- (2.35,1.95) node[right] {$\nabla f(P)$};
+            \draw[blue,thick,->] (1.4,1.03) -- (2.35,0.08) node[below right] {$\mathbf{t}$};
+            \node at (0.9,1.8) {$f(x,y)=c$};
+            \node at (2.15,1.05) {$\perp$};
+        \end{tikzpicture}
+        \caption{Op een niveaucurve $f(x,y)=c$ staat de gradi\"ent $\nabla f(P)$ loodrecht op elke raakvector $\mathbf{t}$ in $P$.}
+        \label{fig:gradient-loodrecht-niveaucurve}
+    \end{figure}
+
+    Dit betekent dat de verplaatsingsvector $(dx,dy)$ loodrecht staat op
+    de gradiëntvector.
+
+    We concluderen dus:
+
+    \begin{quote}
+        De gradiënt staat loodrecht op niveaucurven en niveauoppervlakken.
+    \end{quote}
+
+    \subsection{Geometrische interpretatie}
+
+    De relatie tussen de gradiënt en niveauverzamelingen heeft een duidelijke
+    geometrische betekenis:
+
+    \begin{itemize}
+        \item de gradiënt wijst in de richting waarin de functie het snelst stijgt
+        \item niveaucurven zijn lijnen waar de functie constant blijft
+        \item daarom moet de gradiënt loodrecht staan op deze curven
+    \end{itemize}
+
+    Men kan zich dit intuïtief voorstellen als een berglandschap:
+
+    \begin{itemize}
+        \item niveaucurven zijn hoogtelijnen op een kaart
+        \item de gradiënt wijst in de richting van de steilste helling
+    \end{itemize}
+
+    \subsection{Voorbeeld}
+
+    Beschouw opnieuw de functie
+
+    \[
+        f(x,y) = x^2 + y^2.
+    \]
+
+    De gradiënt is
+
+    \[
+        \nabla f = (2x,2y).
+    \]
+
+    De niveaucurven zijn cirkels
+
+    \[
+        x^2 + y^2 = c.
+    \]
+
+    De vector $(2x,2y)$ wijst radiaal naar buiten en staat dus loodrecht
+    op de cirkels. Dit bevestigt het algemene resultaat dat de gradiënt
+    normaal staat op niveaucurven.
+
+    \subsection{Belang van niveauverzamelingen}
+
+    Niveauverzamelingen spelen een belangrijke rol in verschillende domeinen:
+
+    \begin{itemize}
+        \item geometrische interpretatie van functies
+        \item optimalisatieproblemen
+        \item visualisatie van functies van meerdere variabelen
+        \item veldentheorie in de fysica
+        \item differentiaalmeetkunde
+    \end{itemize}
+
+    In de fysica beschrijven niveauoppervlakken bijvoorbeeld
+    oppervlakken met constante potentiaal in een elektrisch veld.
+    De elektrische veldvector staat dan loodrecht op deze oppervlakken,
+    net zoals de gradiënt loodrecht staat op niveauoppervlakken van een
+    scalaire functie.
 
 \end{document}
