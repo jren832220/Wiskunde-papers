@@ -40,6 +40,8 @@
     \newpage
 
 % ============================================================
+
+
     \section{Wat is de nabla-operator?}
     De nabla-operator (ook \emph{del}-operator) is een \textbf{vector-differentiaaloperator}. In Cartesische co\"ordinaten \((x,y,z)\) defini\"eren we
     \begin{equation}
@@ -66,6 +68,8 @@
     \end{itemize}
 
 % ============================================================
+
+
     \section{De drie kernoperators uit \texorpdfstring{$\nabla$}{∇}}
     Uit \(\nabla\) volgen drie fundamentele differentiaaloperatoren:
     \begin{enumerate}
@@ -76,6 +80,7 @@
     En daarnaast: de \textbf{Laplaciaan} \(\nabla^2\), die je kan zien als \(\nabla\cdot\nabla\) toegepast op een scalair veld.
 
 % ------------------------------------------------------------
+
     \subsection{Gradi\"ent \texorpdfstring{$\nabla \phi$}{∇φ}}
     Laat \(\phi(x,y,z)\) een scalair veld zijn. Dan
     \begin{equation}
@@ -110,6 +115,7 @@
     \end{itemize}
 
 % ------------------------------------------------------------
+
     \subsection{Divergentie \texorpdfstring{$\nabla\cdot\vb{A}$}{∇·A}}
     Laat \(\vb{A}(x,y,z) = (A_x,A_y,A_z)\). Dan
     \begin{equation}
@@ -140,6 +146,7 @@
     \end{itemize}
 
 % ------------------------------------------------------------
+
     \subsection{Rotatie (curl) \texorpdfstring{$\nabla\times\vb{A}$}{∇×A}}
     In Cartesische co\"ordinaten:
     \begin{equation}
@@ -174,6 +181,7 @@
     \end{itemize}
 
 % ------------------------------------------------------------
+
     \subsection{Laplaciaan \texorpdfstring{$\nabla^2$}{∇²}}
     De Laplaciaan op een scalair veld \(\phi\) is:
     \begin{equation}
@@ -195,6 +203,8 @@
     \end{itemize}
 
 % ============================================================
+
+
     \section{Productregels en nuttige vectoridentiteiten}
     Omdat \(\nabla\) een differentiaaloperator is, gelden productregels.
     Laat \(\phi\) scalair en \(\vb{A},\vb{B}\) vectorvelden zijn.
@@ -215,6 +225,8 @@
     Die laatste is cruciaal om golfvergelijkingen voor EM-velden af te leiden.
 
 % ============================================================
+
+
     \section{Co\"ordinatenstelsels: waarom \texorpdfstring{$\nabla$}{∇} ingewikkelder wordt}
     In Cartesische co\"ordinaten zijn basisvectoren constant.
     In kromlijnige co\"ordinaten (cilindrisch, bol) hangen basisvectoren en lengteschalen af van de positie.
@@ -257,6 +269,8 @@
     \end{tcolorbox}
 
 % ============================================================
+
+
     \section{Waar komt \texorpdfstring{$\nabla$}{∇} overal terug in de fysica?}
     Hier is het kernidee: \(\nabla\) vertaalt \textbf{lokale veranderingen} naar \textbf{globale wetten} via integraalstellingen.
 
@@ -313,12 +327,16 @@
     In 3D: de Laplaciaan bepaalt hoe kromming van \(\psi\) leidt tot versnelling in de tijd.
 
 % ============================================================
+
+
     \section{Oefeningen (met volledige uitwerkingen)}
+
     \subsection*{Notatie}
     We werken standaard in Cartesische co\"ordinaten tenzij anders vermeld.
     Gebruik: \(\vb{r}=(x,y,z)\).
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 1: gradi\"ent en richting van snelste stijging}
     Gegeven \(\phi(x,y,z)=x^2y+3z\).
     \begin{enumerate}
@@ -351,6 +369,7 @@
     \end{enumerate}
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 2: divergentie en bron/put interpretatie}
     Beschouw \(\vb{A}(x,y,z)=(x,\,y,\,z)\).
     \begin{enumerate}
@@ -383,6 +402,7 @@
     \end{enumerate}
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 3: curl en conservativiteit}
     Gegeven \(\vb{F}(x,y,z)=(-y,\,x,\,0)\).
     \begin{enumerate}
@@ -423,6 +443,7 @@
     \end{enumerate}
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 4: Laplaciaan en harmonische functies}
     Laat \(\phi(x,y,z)=x^2+y^2-2z^2\).
     \begin{enumerate}
@@ -441,6 +462,7 @@
     Ja, \(\phi\) is harmonisch.
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 5: van integraal naar differentiaal (continu\"iteit)}
     Stel dat een hoeveelheid \(Q\) met dichtheid \(\rho(\vb{r},t)\) stroomt met flux \(\vb{J}(\vb{r},t)\).
     Je weet dat voor elk vast volume \(V\):
@@ -475,6 +497,7 @@
     \end{enumerate}
 
 % ------------------------------------------------------------
+
     \subsection{Oefening 6: overgang van Cartesische naar bolcoördinaten}
 
     Beschouw het scalair veld
@@ -504,6 +527,7 @@
 
 
 % ------------------------------------------------------------
+
     \subsection*{Oplossing}
 
     \begin{enumerate}
@@ -649,7 +673,108 @@
         De resultaten zijn dus volledig consistent.
 
     \end{enumerate}
+
+
+    \section{De "Nabla-piramide" (Hiërarchie van Velden)}
+    Het is voor beginners vaak verwarrend welk type veld er in een operator gaat en wat eruit komt. Een kort overzichtje helpt:
+    \begin{center}
+        \begin{tabular}{c|c|c}
+            Operator         & Input                  & Output                                           \\
+            \hline
+            \(\nabla\)       & scalair veld \(\phi\)  & vector veld \(\nabla\phi\) (gradi\"ent)          \\
+            \(\nabla\cdot\)  & vector veld \(\vb{A}\) & scalair veld \(\nabla\cdot\vb{A}\) (divergentie) \\
+            \(\nabla\times\) & vector veld \(\vb{A}\) & vector veld \(\nabla\times\vb{A}\) (curl)        \\
+            \(\nabla^2\)     & scalair veld \(\phi\)  & scalair veld \(\nabla^2\phi\) (Laplaciaan)
+        \end{tabular}
+    \end{center}
+
+    \subsection{Uitgewerkt voorbeeld bij elke operator uit de tabel}
+    \begin{tcolorbox}[colback=blue!4,colframe=blue!35,title=Van type veld naar concrete berekening]
+        \textbf{1) Gradi\"ent \(\nabla\phi\): van scalair veld naar vectorveld}\\
+        Neem
+        \[
+            \phi(x,y,z)=x^2y+2yz-z^2.
+        \]
+        Dan
+        \[
+            \pdv{\phi}{x}=2xy,\qquad
+            \pdv{\phi}{y}=x^2+2z,\qquad
+            \pdv{\phi}{z}=2y-2z.
+        \]
+        Dus
+        \[
+            \nabla\phi=(2xy)\vb*{e}_x+(x^2+2z)\vb*{e}_y+(2y-2z)\vb*{e}_z.
+        \]
+        In het punt \((1,-1,2)\):
+        \[
+            \nabla\phi(1,-1,2)=(-2,5,-6).
+        \]
+        \emph{Interpretatie:} deze vector wijst in de richting van de snelste lokale toename van \(\phi\).
+
+        \medskip
+        \textbf{2) Divergentie \(\nabla\cdot\vb{A}\): van vectorveld naar scalair veld}\\
+        Neem
+        \[
+            \vb{A}(x,y,z)=\big(x^2,\,xy,\,-2z\big).
+        \]
+        Dan
+        \[
+            \nabla\cdot\vb{A}=\pdv{x^2}{x}+\pdv{xy}{y}+\pdv{(-2z)}{z}=2x+x-2=3x-2.
+        \]
+        In het vlak \(x=1\):
+        \[
+            \nabla\cdot\vb{A}=1>0.
+        \]
+        \emph{Interpretatie:} lokaal gedraagt het veld zich daar als een bron (netto uitstroom).
+
+        \medskip
+        \textbf{3) Curl \(\nabla\times\vb{A}\): van vectorveld naar vectorveld}\\
+        Neem
+        \[
+            \vb{A}(x,y,z)=(-y,\,x,\,0).
+        \]
+        Dan
+        \[
+            \nabla\times\vb{A}=
+            \begin{vmatrix}
+                \vb*{e}_x & \vb*{e}_y & \vb*{e}_z\\
+                \pdv{}{x} & \pdv{}{y} & \pdv{}{z}\\
+                -y & x & 0
+            \end{vmatrix}
+            =\left(0-0\right)\vb*{e}_x-\left(0-0\right)\vb*{e}_y
+            +\left(\pdv{x}{x}-\pdv{(-y)}{y}\right)\vb*{e}_z
+            =2\vb*{e}_z.
+        \]
+        \emph{Interpretatie:} de werveling is constant en wijst overal langs de positieve \(z\)-as.
+
+        \medskip
+        \textbf{4) Laplaciaan \(\nabla^2\phi\): van scalair veld naar scalair veld}\\
+        Neem
+        \[
+            \phi(x,y,z)=x^2+y^2-2z^2.
+        \]
+        Dan
+        \[
+            \nabla^2\phi=\pdv[2]{\phi}{x}+\pdv[2]{\phi}{y}+\pdv[2]{\phi}{z}=2+2-4=0.
+        \]
+        \emph{Interpretatie:} \(\phi\) is harmonisch; er is lokaal geen netto bronterm in dit veld.
+    \end{tcolorbox}
+
+
+    \section{De Helmholtz-decompositien}
+    Dit is een fundamenteel concept in de fysica dat direct aansluit op hoofdstuk 3.2 over identiteiten\textsuperscript{}.
+    Het stelt dat (onder milde voorwaarden) elk vectorveld $A$ geschreven kan worden als de som van een irrotationeel deel (een gradiënt) en een solenoïdaal deel (een rotatie):
+    \[
+        \vb{A} = \nabla\phi + \nabla\times\vb{B},
+    \]
+    Dit verklaart \textit{waarom} we in de fysica zoveel belang hechten aan
+    $\nabla \cdot A = 0$ (bronvrij) en
+    $\nabla \times A = 0$
+    (conservatief)\textsuperscript{}\textsuperscript{}\textsuperscript{}\textsuperscript{}.
+
 % ============================================================
+
+
     \section{Samenvatting in 10 regels}
     \begin{tcolorbox}[colback=green!6,colframe=green!35,title=Cheat sheet]
         \begin{itemize}
