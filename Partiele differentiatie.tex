@@ -1990,6 +1990,24 @@ Dan geldt:
         (x_0 + hu_1,\, y_0 + hu_2,\, z_0 + hu_3).
     \]
 
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \draw[->] (-0.3,0) -- (5.4,0) node[right] {$x$};
+            \draw[->] (0,-0.3) -- (0,3.8) node[above] {$y$};
+
+            \fill (1.2,1.0) circle (1.4pt) node[below left] {$\mathbf{r}_0$};
+            \fill (3.9,2.4) circle (1.4pt) node[above right] {$\mathbf{r}_0+h\mathbf{u}$};
+
+            \draw[blue,thick,->] (1.2,1.0) -- (3.9,2.4) node[midway,above] {$h\mathbf{u}$};
+            \draw[red,thick,->] (1.2,1.0) -- (2.55,1.7) node[midway,below] {$\mathbf{u}$};
+            \draw[dashed] (3.9,2.4) -- (3.9,0);
+            \draw[dashed] (3.9,2.4) -- (0,2.4);
+        \end{tikzpicture}
+        \caption{Schematische verplaatsing in een gegeven richting: vanuit $\mathbf{r}_0$ bewegen we een afstand $h$ in de richting van de eenheidsvector $\mathbf{u}$.}
+        \label{fig:richting-verplaatsing}
+    \end{figure}
+
     Dit idee vormt de basis voor het definiëren van richtingsafgeleiden,
     die beschrijven hoe een functie verandert wanneer we ons in een
     specifieke richting verplaatsen.
@@ -2236,5 +2254,1160 @@ Dan geldt:
     De elektrische veldvector staat dan loodrecht op deze oppervlakken,
     net zoals de gradiënt loodrecht staat op niveauoppervlakken van een
     scalaire functie.
+
+
+    \section{Taylorontwikkeling in meerdere variabelen}
+
+    In de vorige secties hebben we gezien dat een differentieerbare functie
+    lokaal benaderd kan worden door een lineaire uitdrukking. Deze lineaire
+    benadering wordt gegeven door de totale differentiaal en beschrijft het
+    raakvlak aan het oppervlak van de functie.
+
+    De Taylorontwikkeling is een uitbreiding van dit idee. In plaats van enkel
+    een lineaire benadering te gebruiken, voegen we ook hogere-orde termen toe
+    die de kromming van de functie beschrijven. Hierdoor verkrijgen we een
+    veel nauwkeurigere lokale benadering.
+
+    \subsection{Herinnering: lineaire benadering}
+
+    Beschouw een functie van twee variabelen
+
+    \[
+        f(x,y).
+    \]
+
+    Voor een kleine verandering
+
+    \[
+        (x,y) \rightarrow (x+\Delta x, y+\Delta y)
+    \]
+
+    kunnen we de verandering van de functie schrijven als
+
+    \[
+        \Delta f
+        =
+        f(x+\Delta x, y+\Delta y) - f(x,y).
+    \]
+
+    Als de functie differentieerbaar is, geldt de lineaire benadering
+
+    \[
+        \Delta f
+        =
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+        +
+        R(\Delta x,\Delta y),
+    \]
+
+    waarbij $R(\Delta x,\Delta y)$ de restterm is.
+
+    Het lineaire deel
+
+    \[
+        \frac{\partial f}{\partial x}\Delta x
+        +
+        \frac{\partial f}{\partial y}\Delta y
+    \]
+
+    komt overeen met het raakvlak aan het oppervlak $z=f(x,y)$.
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[scale=0.95]
+            \draw[->] (-0.2,0) -- (5.4,0) node[right] {$x$};
+            \draw[->] (0,-0.2) -- (0,3.8) node[above] {$z$};
+
+            % Werkelijke functie (doorsnede) en lineaire benadering
+            \draw[thick,domain=0.5:5,smooth] plot (\x,{0.18*(\x-2.0)*(\x-2.0)+1.0});
+            \draw[blue,thick] (0.6,1.55) -- (4.8,2.39);
+
+            \fill (2.0,1.0) circle (1.5pt) node[below right] {$P$};
+            \fill (3.6,1.46) circle (1.2pt);
+            \draw[dashed] (3.6,1.46) -- (3.6,0) node[below] {$x+\Delta x$};
+            \draw[dashed] (3.6,2.15) -- (3.6,1.46);
+
+            \node[blue] at (4.4,2.6) {lineaire benadering};
+            \node at (1.15,2.45) {werkelijke functie};
+            \node[right] at (3.62,1.82) {$R$};
+        \end{tikzpicture}
+        \caption{Doorsnede van $z=f(x,y)$: de lineaire benadering (blauw) benadert de functie nabij $P$, en het verticale verschil stelt de restterm $R$ voor.}
+        \label{fig:lineaire-benadering-restterm}
+    \end{figure}
+
+    De Taylorontwikkeling gaat een stap verder en voegt termen van hogere orde toe.
+
+    \subsection{Taylorontwikkeling van tweede orde}
+
+    Wanneer de tweede partiële afgeleiden bestaan en continu zijn,
+    kan een functie lokaal geschreven worden als
+
+    \[
+        \begin{aligned}
+            f(x+\Delta x, y+\Delta y)
+            &=
+            f(x,y)
+            +
+            \frac{\partial f}{\partial x}\Delta x
+            +
+            \frac{\partial f}{\partial y}\Delta y \\
+            &+
+            \frac{1}{2}
+            \left(
+                \frac{\partial^2 f}{\partial x^2}(\Delta x)^2
+            +
+            2\frac{\partial^2 f}{\partial x \partial y}\Delta x \Delta y
+            +
+                \frac{\partial^2 f}{\partial y^2}(\Delta y)^2
+            \right)
+            +
+            R_2(\Delta x,\Delta y).
+        \end{aligned}
+    \]
+
+    Hierbij stelt $R_2(\Delta x,\Delta y)$ de restterm van hogere orde voor.
+
+    De termen van tweede orde beschrijven de kromming van het oppervlak.
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}[x=1cm,y=1cm]
+            \draw[->] (0,0) -- (6.2,0) node[right] {$\|\mathbf{h}\|$ klein};
+            \draw[->] (0,0) -- (0,3.6) node[above] {bijdragegrootte};
+
+            % Balken die orde van termen vergelijken
+            \fill[blue!20] (0.8,0) rectangle (2.0,2.6);
+            \draw (0.8,0) rectangle (2.0,2.6);
+            \node[align=center] at (1.4,2.95) {lineair\\$\sim \|\mathbf{h}\|$};
+
+            \fill[red!20] (2.8,0) rectangle (4.0,1.4);
+            \draw (2.8,0) rectangle (4.0,1.4);
+            \node[align=center] at (3.4,1.75) {kwadratisch\\$\sim \|\mathbf{h}\|^2$};
+
+            \fill[gray!20] (4.8,0) rectangle (6.0,0.7);
+            \draw (4.8,0) rectangle (6.0,0.7);
+            \node[align=center] at (5.4,1.02) {rest\\hogere orde};
+        \end{tikzpicture}
+        \caption{Schaalvergelijking van termen in de Taylorontwikkeling: bij kleine verplaatsingen domineert het lineaire deel, terwijl tweede-orde en hogere-orde termen kleiner worden.}
+        \label{fig:taylor-orde-termen}
+    \end{figure}
+
+    \subsection{De Hessiaan}
+
+    De tweede-orde termen kunnen compact geschreven worden met behulp van
+    de \textit{Hessiaanmatrix}.
+
+    Voor een functie $f(x,y)$ definiëren we
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            \frac{\partial^2 f}{\partial x^2} &
+            \frac{\partial^2 f}{\partial x \partial y} \\
+            \frac{\partial^2 f}{\partial y \partial x} &
+            \frac{\partial^2 f}{\partial y^2}
+        \end{pmatrix}.
+    \]
+
+    Met behulp van deze matrix kan de Taylorontwikkeling van tweede orde
+    geschreven worden als
+
+    \[
+        f(\mathbf{x}+\mathbf{h})
+        =
+        f(\mathbf{x})
+        +
+        \nabla f(\mathbf{x}) \cdot \mathbf{h}
+        +
+        \frac{1}{2}
+        \mathbf{h}^T H_f(\mathbf{x}) \mathbf{h}
+        +
+        R_2(\mathbf{h}),
+    \]
+
+    waarbij
+
+    \[
+        \mathbf{h} =
+        \begin{pmatrix}
+            \Delta x \\
+            \Delta y
+        \end{pmatrix}.
+    \]
+
+    Hier staat $\mathbf{h}^T$ voor de getransponeerde vector.
+
+    \subsection{Interpretatie van de verschillende termen}
+
+    De Taylorontwikkeling heeft een duidelijke geometrische interpretatie.
+
+    \begin{itemize}
+
+        \item Het eerste deel $f(x,y)$ is de functiewaarde in het gekozen punt.
+
+        \item Het lineaire deel
+        \[
+            \nabla f \cdot (\Delta x,\Delta y)
+        \]
+        beschrijft het raakvlak.
+
+        \item Het kwadratische deel met de Hessiaan beschrijft de kromming
+        van het oppervlak.
+
+    \end{itemize}
+
+    Voor zeer kleine veranderingen zijn de hogere-orde termen klein,
+    waardoor de Taylorontwikkeling een uitstekende benadering vormt.
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y) = x^2 + y^2.
+    \]
+
+    De eerste afgeleiden zijn
+
+    \[
+        \frac{\partial f}{\partial x} = 2x,
+        \qquad
+        \frac{\partial f}{\partial y} = 2y.
+    \]
+
+    De tweede afgeleiden zijn
+
+    \[
+        \frac{\partial^2 f}{\partial x^2} = 2,
+        \qquad
+        \frac{\partial^2 f}{\partial y^2} = 2,
+        \qquad
+        \frac{\partial^2 f}{\partial x \partial y} = 0.
+    \]
+
+    De Taylorontwikkeling rond het punt $(x,y)$ wordt dan
+
+    \[
+        f(x+\Delta x, y+\Delta y)
+        =
+        x^2 + y^2
+        +
+        2x\Delta x
+        +
+        2y\Delta y
+        +
+        (\Delta x)^2
+        +
+        (\Delta y)^2.
+    \]
+
+    In dit geval is de Taylorontwikkeling exact omdat de functie
+    een polynoom van tweede graad is.
+
+    \subsection{Algemene Taylorontwikkeling}
+
+    Voor een functie van meerdere variabelen kan men ook hogere-orde
+    Taylorontwikkelingen definiëren.
+
+    Voor een functie
+
+    \[
+        f(x_1,x_2,\dots,x_n)
+    \]
+
+    kan men schrijven
+
+    \[
+        f(\mathbf{x}+\mathbf{h})
+        =
+        f(\mathbf{x})
+        +
+        \sum_i
+        \frac{\partial f}{\partial x_i} h_i
+        +
+        \frac{1}{2}
+        \sum_{i,j}
+        \frac{\partial^2 f}{\partial x_i \partial x_j}
+        h_i h_j
+        +
+        \cdots
+    \]
+
+    waarbij de sommen lopen over alle variabelen.
+
+    Deze formule vormt de basis voor vele toepassingen in analyse,
+    numerieke methoden en fysica.
+
+    \subsection{Belang van de Taylorontwikkeling}
+
+    De Taylorontwikkeling speelt een centrale rol in de multivariabele analyse.
+
+    Ze wordt gebruikt voor:
+
+    \begin{itemize}
+
+        \item lokale benaderingen van functies
+
+        \item foutanalyse in numerieke berekeningen
+
+        \item optimalisatieproblemen
+
+        \item studie van stabiliteit van oplossingen
+
+        \item fysische theorieën waarin kleine afwijkingen worden onderzocht
+
+    \end{itemize}
+
+    In veel toepassingen volstaat de Taylorontwikkeling van tweede orde,
+    omdat deze reeds informatie bevat over zowel de helling als de kromming
+    van een functie.
+
+    In het volgende hoofdstuk zullen we zien hoe de tweede-orde termen,
+    via de Hessiaanmatrix, gebruikt kunnen worden om kritieke punten
+    van functies te classificeren en zo lokale maxima, minima en
+    zadelpunten te bepalen.
+
+
+    \section{De Hessiaan}
+
+    In de vorige sectie hebben we gezien dat de Taylorontwikkeling van tweede orde
+    informatie bevat over de kromming van een functie. De tweede partiële afgeleiden
+    spelen daarbij een centrale rol. Om deze systematisch te organiseren, introduceren
+    we de \textit{Hessiaanmatrix}.
+
+    De Hessiaan vormt een fundamenteel object in de multivariabele analyse en speelt
+    een belangrijke rol in optimalisatie, differentiaalmeetkunde en natuurkunde.
+
+    \subsection{Definitie}
+
+    Beschouw een functie van twee variabelen
+
+    \[
+        f(x,y).
+    \]
+
+    De Hessiaan van $f$ wordt gedefinieerd als de matrix van tweede partiële
+    afgeleiden:
+
+    \[
+        H_f(x,y)
+        =
+        \begin{pmatrix}
+            \frac{\partial^2 f}{\partial x^2} &
+            \frac{\partial^2 f}{\partial x \partial y} \\
+            \frac{\partial^2 f}{\partial y \partial x} &
+            \frac{\partial^2 f}{\partial y^2}
+        \end{pmatrix}.
+    \]
+
+    Meer algemeen, voor een functie van $n$ variabelen
+
+    \[
+        f(x_1,x_2,\dots,x_n),
+    \]
+
+    wordt de Hessiaan gegeven door
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            \frac{\partial^2 f}{\partial x_1^2} &
+            \frac{\partial^2 f}{\partial x_1\partial x_2} &
+            \cdots &
+            \frac{\partial^2 f}{\partial x_1\partial x_n} \\
+
+            \frac{\partial^2 f}{\partial x_2\partial x_1} &
+            \frac{\partial^2 f}{\partial x_2^2} &
+            \cdots &
+            \frac{\partial^2 f}{\partial x_2\partial x_n} \\
+
+            \vdots & \vdots & \ddots & \vdots \\
+
+            \frac{\partial^2 f}{\partial x_n\partial x_1} &
+            \frac{\partial^2 f}{\partial x_n\partial x_2} &
+            \cdots &
+            \frac{\partial^2 f}{\partial x_n^2}
+        \end{pmatrix}.
+    \]
+
+    De Hessiaan is dus een $n \times n$ matrix die alle tweede afgeleiden
+    van de functie bevat.
+
+    \subsection{Symmetrie van de Hessiaan}
+
+    Wanneer de tweede partiële afgeleiden continu zijn, geldt volgens de
+    stelling van Clairaut-Schwarz dat
+
+    \[
+        \frac{\partial^2 f}{\partial x_i \partial x_j}
+        =
+        \frac{\partial^2 f}{\partial x_j \partial x_i}.
+    \]
+
+    Dit betekent dat de Hessiaan symmetrisch is:
+
+    \[
+        H_f = H_f^T.
+    \]
+
+    Deze eigenschap is bijzonder belangrijk, omdat symmetrische matrices
+    goede algebraïsche eigenschappen hebben en bijvoorbeeld altijd
+    reële eigenwaarden bezitten.
+
+    \subsection{Relatie met de Taylorontwikkeling}
+
+    In de vorige sectie hebben we gezien dat de Taylorontwikkeling
+    van tweede orde kan geschreven worden als
+
+    \[
+        f(\mathbf{x}+\mathbf{h})
+        =
+        f(\mathbf{x})
+        +
+        \nabla f(\mathbf{x}) \cdot \mathbf{h}
+        +
+        \frac{1}{2}
+        \mathbf{h}^T H_f(\mathbf{x}) \mathbf{h}
+        +
+        R_2(\mathbf{h}).
+    \]
+
+    Hierbij stelt
+
+    \[
+        \mathbf{h} =
+        \begin{pmatrix}
+            h_1 \\
+            h_2
+        \end{pmatrix}
+    \]
+
+    een kleine verplaatsing voor.
+
+    De term
+
+    \[
+        \mathbf{h}^T H_f \mathbf{h}
+    \]
+
+    is een kwadratische vorm die de kromming van het oppervlak
+    beschrijft.
+
+    \subsection{Geometrische interpretatie}
+
+    De Hessiaan beschrijft hoe de helling van een functie verandert
+    in verschillende richtingen.
+
+    \begin{itemize}
+
+        \item De gradiënt geeft de helling van de functie.
+
+        \item De Hessiaan beschrijft hoe deze helling zelf verandert.
+
+    \end{itemize}
+
+    Men kan de Hessiaan dus interpreteren als een maat voor de
+    \textit{kromming} van het oppervlak.
+
+    Wanneer alle tweede afgeleiden nul zijn, is de functie lokaal
+    lineair. Wanneer de tweede afgeleiden verschillend van nul zijn,
+    krijgt het oppervlak een kromming.
+
+    \subsection{Voorbeeld}
+
+    Beschouw de functie
+
+    \[
+        f(x,y) = x^2 + y^2.
+    \]
+
+    De tweede partiële afgeleiden zijn
+
+    \[
+        \frac{\partial^2 f}{\partial x^2} = 2,
+        \qquad
+        \frac{\partial^2 f}{\partial y^2} = 2,
+        \qquad
+        \frac{\partial^2 f}{\partial x \partial y} = 0.
+    \]
+
+    De Hessiaan wordt dus
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            2 & 0 \\
+            0 & 2
+        \end{pmatrix}.
+    \]
+
+    Deze matrix is positief, wat betekent dat het oppervlak overal
+    naar boven gekromd is. Dit komt overeen met het feit dat
+    $f(x,y) = x^2 + y^2$ een paraboloïde vormt.
+
+    \subsection{Voorbeeld met gemengde afgeleiden}
+
+    Beschouw nu
+
+    \[
+        f(x,y) = xy.
+    \]
+
+    Dan zijn de tweede afgeleiden
+
+    \[
+        \frac{\partial^2 f}{\partial x^2} = 0,
+        \qquad
+        \frac{\partial^2 f}{\partial y^2} = 0,
+        \qquad
+        \frac{\partial^2 f}{\partial x \partial y} = 1.
+    \]
+
+    De Hessiaan wordt
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{pmatrix}.
+    \]
+
+    Deze matrix heeft zowel positieve als negatieve eigenwaarden,
+    wat betekent dat het oppervlak een zadelvorm heeft.
+
+    \subsection{Hessiaan en kromming van functies}
+
+    De Hessiaan bevat dus informatie over de kromming van de functie.
+
+    In het bijzonder kan men met behulp van de Hessiaan bepalen of
+    een punt een lokaal maximum, minimum of zadelpunt is.
+
+    Wanneer
+
+    \[
+        \nabla f = 0
+    \]
+
+    spreken we van een \textit{kritiek punt}. De Hessiaan bepaalt
+    dan het lokale gedrag van de functie rond dat punt.
+
+    \begin{itemize}
+
+        \item Als de Hessiaan positief definiet is, is het punt een lokaal minimum.
+
+        \item Als de Hessiaan negatief definiet is, is het punt een lokaal maximum.
+
+        \item Als de Hessiaan zowel positieve als negatieve eigenwaarden heeft,
+        is het punt een zadelpunt.
+
+    \end{itemize}
+
+    Deze resultaten vormen de basis van veel optimalisatieproblemen.
+
+    \subsection{Belang van de Hessiaan}
+
+    De Hessiaan speelt een centrale rol in verschillende domeinen van
+    de wiskunde en de natuurkunde.
+
+    \begin{itemize}
+
+        \item optimalisatie en extremumproblemen
+
+        \item stabiliteitsanalyse van oplossingen
+
+        \item differentiaalmeetkunde
+
+        \item mechanica en potentiaalvelden
+
+        \item numerieke optimalisatie-algoritmen
+
+    \end{itemize}
+
+    In veel toepassingen beschrijft de Hessiaan hoe een systeem reageert
+    op kleine verstoringen rond een evenwichtspunt.
+
+    In het volgende hoofdstuk zullen we zien hoe deze matrix gebruikt
+    kan worden om kritieke punten van functies systematisch te
+    classificeren als maxima, minima of zadelpunten.
+
+
+    \section{Kritieke punten en optimalisatie}
+
+    In vele toepassingen van de wiskunde en de natuurkunde zijn we geïnteresseerd
+    in het vinden van punten waar een functie haar maximale of minimale waarde
+    aanneemt. Dit probleem staat bekend als een \textit{optimalisatieprobleem}.
+
+    Voor functies van meerdere variabelen wordt de studie van maxima en minima
+    sterk vereenvoudigd door het gebruik van de gradiënt en de Hessiaan.
+
+    \subsection{Lokale maxima en minima}
+
+    Beschouw een functie
+
+    \[
+        f(x,y).
+    \]
+
+    We zeggen dat $f$ een \textit{lokaal maximum} heeft in het punt $(x_0,y_0)$
+    als er een omgeving van dat punt bestaat waarvoor
+
+    \[
+        f(x,y) \le f(x_0,y_0)
+    \]
+
+    voor alle punten $(x,y)$ in die omgeving.
+
+    Analoog zeggen we dat $f$ een \textit{lokaal minimum} heeft in $(x_0,y_0)$
+    als
+
+    \[
+        f(x,y) \ge f(x_0,y_0)
+    \]
+
+    in een buurt van dat punt.
+
+    Wanneer een punt noch een maximum noch een minimum is,
+    maar de functie in sommige richtingen stijgt en in andere daalt,
+    spreken we van een \textit{zadelpunt}.
+
+    \subsection{Kritieke punten}
+
+    Een eerste belangrijke stap bij het zoeken naar extrema
+    is het bepalen van de \textit{kritieke punten} van de functie.
+
+    \begin{definition}
+        Een punt $(x_0,y_0)$ wordt een kritiek punt van $f$ genoemd
+        als de gradiënt daar nul is:
+
+        \[
+            \nabla f(x_0,y_0) = (0,0).
+        \]
+
+        Dit betekent dat
+
+        \[
+            \frac{\partial f}{\partial x}(x_0,y_0) = 0,
+            \qquad
+            \frac{\partial f}{\partial y}(x_0,y_0) = 0.
+        \]
+    \end{definition}
+
+    De reden voor deze definitie is dat de gradiënt de richting van
+    de grootste stijging van de functie aangeeft. Wanneer de gradiënt
+    nul is, is er lokaal geen richting waarin de functie onmiddellijk
+    toeneemt of afneemt.
+
+    \subsection{Noodzakelijke voorwaarde voor extrema}
+
+    We formuleren nu een fundamenteel resultaat.
+
+    \begin{theorem}
+        Als een differentieerbare functie $f(x,y)$ een lokaal maximum
+        of minimum heeft in een punt $(x_0,y_0)$, dan geldt
+
+        \[
+            \nabla f(x_0,y_0) = 0.
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Stel dat $f$ een lokaal maximum heeft in $(x_0,y_0)$.
+        Beschouw een willekeurige richting gegeven door een eenheidsvector
+        $\mathbf{u}$.
+
+        De verandering van de functie in deze richting wordt gegeven
+        door de richtingsafgeleide:
+
+        \[
+            D_{\mathbf{u}} f = \nabla f \cdot \mathbf{u}.
+        \]
+
+        Omdat $(x_0,y_0)$ een maximum is, kan de functie in geen enkele
+        richting toenemen. Daarom moet gelden
+
+        \[
+            D_{\mathbf{u}} f = 0
+        \]
+
+        voor alle richtingen $\mathbf{u}$.
+
+        Dit kan enkel wanneer
+
+        \[
+            \nabla f = 0.
+        \]
+    \end{proof}
+
+    \subsection{Classificatie van kritieke punten}
+
+    Niet elk kritiek punt is een maximum of minimum.
+    Om het gedrag van de functie rond een kritiek punt te begrijpen,
+    gebruiken we de Hessiaanmatrix.
+
+    Voor een functie $f(x,y)$ definiëren we
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            f_{xx} & f_{xy} \\
+            f_{yx} & f_{yy}
+        \end{pmatrix}.
+    \]
+
+    We introduceren de determinant
+
+    \[
+        D = f_{xx} f_{yy} - (f_{xy})^2.
+    \]
+
+    Deze grootheid bepaalt het type van het kritisch punt.
+
+    \begin{theorem}[Tweede-afgeleidentest]
+
+Beschouw een kritiek punt $(x_0,y_0)$ van $f(x,y)$.
+
+\begin{itemize}
+
+    \item Als $D > 0$ en $f_{xx}(x_0,y_0) > 0$,
+    dan heeft $f$ een lokaal minimum.
+
+    \item Als $D > 0$ en $f_{xx}(x_0,y_0) < 0$,
+    dan heeft $f$ een lokaal maximum.
+
+    \item Als $D < 0$, dan is het punt een zadelpunt.
+
+\end{itemize}
+
+    \end{theorem}
+
+    \subsection{Interpretatie via de Taylorontwikkeling}
+
+    De reden voor deze classificatie ligt in de Taylorontwikkeling
+    van tweede orde.
+
+    Voor een klein verschil $\mathbf{h}$ rond een kritiek punt
+    geldt namelijk
+
+    \[
+        f(\mathbf{x}+\mathbf{h})
+        =
+        f(\mathbf{x})
+        +
+        \frac{1}{2}\mathbf{h}^T H_f \mathbf{h}.
+    \]
+
+    Omdat de lineaire term verdwijnt (de gradiënt is nul),
+    wordt het gedrag van de functie volledig bepaald door de Hessiaan.
+
+    \begin{itemize}
+
+        \item Als $\mathbf{h}^T H_f \mathbf{h} > 0$ voor alle $\mathbf{h}$,
+        dan is het punt een minimum.
+
+        \item Als $\mathbf{h}^T H_f \mathbf{h} < 0$ voor alle $\mathbf{h}$,
+        dan is het punt een maximum.
+
+        \item Als het teken verandert afhankelijk van de richting,
+        dan ontstaat een zadelpunt.
+
+    \end{itemize}
+
+    \subsection{Voorbeeld: lokaal minimum}
+
+    Beschouw
+
+    \[
+        f(x,y) = x^2 + y^2.
+    \]
+
+    De gradiënt is
+
+    \[
+        \nabla f = (2x,2y).
+    \]
+
+    Het enige kritieke punt is
+
+    \[
+        (0,0).
+    \]
+
+    De Hessiaan is
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            2 & 0 \\
+            0 & 2
+        \end{pmatrix}.
+    \]
+
+    De determinant is
+
+    \[
+        D = 4 > 0
+    \]
+
+    en
+
+    \[
+        f_{xx} = 2 > 0.
+    \]
+
+    Dus $(0,0)$ is een lokaal minimum.
+
+    \subsection{Voorbeeld: zadelpunt}
+
+    Beschouw
+
+    \[
+        f(x,y) = x^2 - y^2.
+    \]
+
+    De gradiënt is
+
+    \[
+        \nabla f = (2x,-2y).
+    \]
+
+    Het kritieke punt is opnieuw
+
+    \[
+        (0,0).
+    \]
+
+    De Hessiaan is
+
+    \[
+        H_f =
+        \begin{pmatrix}
+            2 & 0 \\
+            0 & -2
+        \end{pmatrix}.
+    \]
+
+    De determinant is
+
+    \[
+        D = -4 < 0.
+    \]
+
+    Daarom is $(0,0)$ een zadelpunt.
+
+    \subsection{Procedure voor het oplossen van optimalisatieproblemen}
+
+    Het bepalen van lokale extrema verloopt meestal volgens
+    de volgende stappen:
+
+    \begin{enumerate}
+
+        \item Bereken de partiële afgeleiden van de functie.
+
+        \item Zoek de kritieke punten door het systeem
+
+        \[
+            \nabla f = 0
+        \]
+
+        op te lossen.
+
+        \item Bereken de tweede partiële afgeleiden.
+
+        \item Vorm de Hessiaan en bereken de determinant
+
+        \[
+            D = f_{xx}f_{yy} - (f_{xy})^2.
+        \]
+
+        \item Classificeer elk kritisch punt.
+
+    \end{enumerate}
+
+    \subsection{Belang van optimalisatie}
+
+    Optimalisatieproblemen verschijnen in vele domeinen van
+    de wetenschap en techniek.
+
+    \begin{itemize}
+
+        \item fysica (evenwichtstoestanden)
+
+        \item economie (maximaliseren van winst)
+
+        \item machine learning (minimaliseren van foutfuncties)
+
+        \item engineering (optimalisatie van systemen)
+
+    \end{itemize}
+
+    De theorie van kritieke punten vormt daarom een essentieel
+    onderdeel van de multivariabele differentiaalrekening.
+
+
+    \section{Optimalisatie met randvoorwaarden: de methode van Lagrange-multipliers}
+
+    In de vorige sectie hebben we gezien hoe lokale maxima en minima van een functie
+    kunnen worden gevonden door de gradiënt nul te stellen. Dit werkt echter enkel
+    wanneer de variabelen vrij kunnen variëren.
+
+    In veel praktische problemen zijn er echter \textit{randvoorwaarden} of
+    \textit{beperkingen}. Bijvoorbeeld:
+
+    \begin{itemize}
+        \item een punt moet op een bepaalde kromme liggen,
+        \item een systeem moet voldoen aan een behoudswet,
+        \item een grootheid moet constant blijven.
+    \end{itemize}
+
+    De methode van Lagrange-multipliers laat ons toe om zulke
+    optimalisatieproblemen systematisch op te lossen.
+
+    \subsection{Het probleem}
+
+    Beschouw een functie
+
+    \[
+        f(x,y)
+    \]
+
+    die we willen maximaliseren of minimaliseren,
+    onder de voorwaarde dat de variabelen voldoen aan een
+    \textit{constraint}
+
+    \[
+        g(x,y) = c.
+    \]
+
+    De vergelijking $g(x,y)=c$ beschrijft een kromme in het vlak.
+    We zoeken dus de maximale of minimale waarde van $f$ langs deze kromme.
+
+    \subsection{Geometrische interpretatie}
+
+    Een belangrijk inzicht is dat in een optimum langs de constraint
+    de niveaucurven van $f$ de constraint raken zonder deze te snijden.
+
+    Dit betekent dat hun raaklijnen parallel zijn.
+
+    Omdat de gradiëntvector loodrecht staat op niveaucurven,
+    volgt dat in het optimum:
+
+    \[
+        \nabla f \parallel \nabla g.
+    \]
+
+    Dus bestaat er een getal $\lambda$ waarvoor
+
+    \[
+        \nabla f = \lambda \nabla g.
+    \]
+
+    Het getal $\lambda$ wordt de \textit{Lagrange-multiplier} genoemd.
+
+    \subsection{De Lagrange-vergelijkingen}
+
+    Voor een functie van twee variabelen leidt dit tot het systeem
+
+    \[
+        \nabla f(x,y) = \lambda \nabla g(x,y)
+    \]
+
+    samen met de randvoorwaarde
+
+    \[
+        g(x,y)=c.
+    \]
+
+    In componenten wordt dit
+
+    \[
+        \frac{\partial f}{\partial x}
+        =
+        \lambda
+        \frac{\partial g}{\partial x},
+    \]
+
+    \[
+        \frac{\partial f}{\partial y}
+        =
+        \lambda
+        \frac{\partial g}{\partial y},
+    \]
+
+    \[
+        g(x,y) = c.
+    \]
+
+    Dit systeem van vergelijkingen laat ons toe om de mogelijke
+    optima te vinden.
+
+    \subsection{Interpretatie van de Lagrange-multiplier}
+
+    De Lagrange-multiplier $\lambda$ heeft ook een interessante interpretatie.
+
+    Wanneer de constraint licht verandert, geeft $\lambda$
+    de gevoeligheid van het optimum weer.
+
+    In vele fysische problemen komt $\lambda$ overeen met een
+    kracht of een potentiaal.
+
+    In de mechanica verschijnt de Lagrange-multiplier bijvoorbeeld
+    als een \textit{constraintkracht} die een systeem op een bepaalde
+    baan houdt.
+
+    \subsection{Voorbeeld}
+
+    We willen de maximale waarde bepalen van
+
+    \[
+        f(x,y) = xy
+    \]
+
+    onder de voorwaarde
+
+    \[
+        x^2 + y^2 = 1.
+    \]
+
+    Deze constraint beschrijft de eenheidscirkel.
+
+    We berekenen eerst de gradiënten.
+
+    Voor $f$:
+
+    \[
+        \nabla f = (y,x).
+    \]
+
+    Voor $g(x,y) = x^2 + y^2$:
+
+    \[
+        \nabla g = (2x,2y).
+    \]
+
+    Volgens de methode van Lagrange-multipliers geldt
+
+    \[
+        \nabla f = \lambda \nabla g.
+    \]
+
+    Dus
+
+    \[
+        y = 2\lambda x,
+    \]
+
+    \[
+        x = 2\lambda y.
+    \]
+
+    Samen met de constraint
+
+    \[
+        x^2 + y^2 = 1.
+    \]
+
+    Uit de eerste twee vergelijkingen volgt
+
+    \[
+        x = \pm y.
+    \]
+
+    Invullen in de constraint geeft
+
+    \[
+        2x^2 = 1.
+    \]
+
+    Dus
+
+    \[
+        x = \pm \frac{1}{\sqrt{2}},
+        \qquad
+        y = \pm \frac{1}{\sqrt{2}}.
+    \]
+
+    Daaruit volgen vier mogelijke punten.
+
+    De maximale waarde van $f$ wordt bereikt wanneer
+    $x$ en $y$ hetzelfde teken hebben:
+
+    \[
+        f = \frac{1}{2}.
+    \]
+
+    De minimale waarde ontstaat wanneer de tekens tegengesteld zijn:
+
+    \[
+        f = -\frac{1}{2}.
+    \]
+
+    \subsection{Algemene formulering}
+
+    Voor een functie
+
+    \[
+        f(x_1,x_2,\dots,x_n)
+    \]
+
+    met een constraint
+
+    \[
+        g(x_1,x_2,\dots,x_n)=c
+    \]
+
+    wordt het probleem opgelost door het systeem
+
+    \[
+        \nabla f = \lambda \nabla g
+    \]
+
+    samen met
+
+    \[
+        g(x_1,x_2,\dots,x_n)=c.
+    \]
+
+    Wanneer meerdere constraints aanwezig zijn,
+    bijvoorbeeld
+
+    \[
+        g_1(x)=c_1, \quad g_2(x)=c_2,
+    \]
+
+    introduceren we meerdere Lagrange-multipliers:
+
+    \[
+        \nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2.
+    \]
+
+    \subsection{Belang van de methode}
+
+    De methode van Lagrange-multipliers is een van de
+    belangrijkste technieken in de toegepaste wiskunde.
+
+    Ze verschijnt onder andere in:
+
+    \begin{itemize}
+
+        \item mechanica en variatierekening
+
+        \item economie (optimalisatie onder budgetbeperkingen)
+
+        \item machine learning (constraint optimalisatie)
+
+        \item differentiaalmeetkunde
+
+    \end{itemize}
+
+    In veel toepassingen beschrijft de methode hoe een systeem
+    zich gedraagt wanneer het onderworpen is aan fysieke of
+    geometrische beperkingen.
+
+    De Lagrange-multipliers vormen daarom een fundamentele brug
+    tussen de differentiaalrekening en de theorie van
+    geconstrueerde optimalisatieproblemen.
 
 \end{document}
